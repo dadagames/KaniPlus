@@ -279,7 +279,9 @@ small.faint{display:block;font-size:12px;line-height:1.2;margin-top:1px}
 <script>
 /* Optional sync. To let people keep their progress across browsers, deploy worker.js and paste its URL between the quotes. */
 window.KANI_SYNC_URL = 'https://kani-sync.daanvanooyen60.workers.dev';
+window.KANI_ANALYTICS = true;
 </script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "89df23c428fe44e188352666baadf8b6"}'></script>
 <script>
 'use strict';
 /* ---------- helpers ---------- */
@@ -1112,7 +1114,7 @@ function viewSettings(){
       <button class="btn" data-act="wipe">${S.armed?'Click again to delete everything':'Delete my saved data'}</button></div></section>
   <section class="card"><header><h3>About</h3></header>
     <p class="muted" style="max-width:70ch">Kani Plus is an unofficial, free companion for WaniKani and is not affiliated with WaniKani or Tofugu. It reads your data with the token you give it.${SYNC_URL?' The only server involved is the optional sync store run by this page\'s author, which keeps your mnemonics and extra-kanji progress under your WaniKani username and does not keep your token.':' It has no server of its own.'}</p>
-    <p class="muted" style="max-width:70ch;margin-top:8px">Joyo grades, newspaper frequency ranks and JLPT levels come from <a href="https://github.com/davidluzgouveia/kanji-data" target="_blank" rel="noopener">kanji-data</a>, which is built on <a href="https://www.edrdg.org/wiki/index.php/KANJIDIC_Project" target="_blank" rel="noopener">KANJIDIC2</a> (EDRDG, CC BY-SA 4.0). The JLPT has no official kanji lists, so these are the widely used pre-2010 lists. Meanings are KANJIDIC glosses, so add your own accepted answers when a gloss is not how you think of a kanji.</p></section>`;
+    <p class="muted" style="max-width:70ch;margin-top:8px">Joyo grades, newspaper frequency ranks and JLPT levels come from <a href="https://github.com/davidluzgouveia/kanji-data" target="_blank" rel="noopener">kanji-data</a>, which is built on <a href="https://www.edrdg.org/wiki/index.php/KANJIDIC_Project" target="_blank" rel="noopener">KANJIDIC2</a> (EDRDG, CC BY-SA 4.0). The JLPT has no official kanji lists, so these are the widely used pre-2010 lists. Meanings are KANJIDIC glosses, so add your own accepted answers when a gloss is not how you think of a kanji.</p>${window.KANI_ANALYTICS?'<p class="muted" style="max-width:70ch;margin-top:8px">Visits to this page are counted with Cloudflare Web Analytics, which uses no cookies and does not see your token or your study data.</p>':''}</section>`;
 }
 
 /* ---------- Extra Kanji: kanji WaniKani does not teach ---------- */
