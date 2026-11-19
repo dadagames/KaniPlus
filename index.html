@@ -11,7 +11,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23dd0093'/%3E%3Ctext x='16' y='23' font-size='20' text-anchor='middle' fill='white' font-family='sans-serif'%3E%E8%9F%B9%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Ubuntu:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Ubuntu:wght@400;500;700&display=optional">
 <style>
 /* Layout: sticky tab header over a single-column workspace; WaniKani-style colored tiles and gradient action buttons. */
 :root{
@@ -395,6 +395,11 @@ ol.steps{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
 .trbtn svg{flex:none}
 .trbtn:hover,.trbtn:focus-visible{color:var(--bg);background:var(--ink);border-color:var(--ink);outline:none}
 
+/* no layout jumps while loading: nothing shows until the first page is built, and the page keeps a minimum height so the footer never moves */
+body:not(.ready) .wrap{visibility:hidden}
+main{min-height:70vh}
+html{scrollbar-gutter:stable}
+
 </style>
 </head>
 <body>
@@ -402,7 +407,7 @@ ol.steps{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
 <header class="top">
   <a class="brand" href="#dashboard"><i>蟹</i>Kani Plus</a>
   <nav class="tabs" aria-label="Sections"><a href="#dashboard" data-r="dashboard">Dashboard</a><a href="#watchlist" data-r="watchlist">Watchlist</a><a href="#practice" data-r="practice">Practice</a><a href="#extra-kanji" data-r="extra-kanji">Extra Kanji</a><a href="#vocab" data-r="vocab"><span class="lg">Vocab &amp; Reading</span><span class="sh">Vocab</span></a><a href="#writing" data-r="writing">Writing</a><a href="#stats" data-r="stats">Stats</a><a href="#settings" data-r="settings">Settings</a></nav>
-  <div class="chips"><button class="btn sm" id="refbtn" data-act="refresh" hidden>Refresh</button><span id="srcchip" class="chip"></span></div>
+  <div class="chips"><button class="btn sm" id="refbtn" data-act="refresh" hidden>Refresh</button><span id="srcchip" class="chip">Not connected</span></div>
 </header>
 <main id="app"></main>
 <p class="foot">Unofficial fan-made companion for WaniKani, not affiliated with WaniKani or Tofugu. Kanji data from KANJIDIC2 via kanji-data.</p>
@@ -2810,6 +2815,7 @@ function boot(){
   const snap=LS.get(ukey('snap'));
   if(snap){try{S.D=parseSnapshot(snap);S.raw=snap;S.source='import';S.importedAt=snap.generated}catch(e){S.D=null}}
   S.loading=false;route();
+  document.body.classList.add('ready');
   if(S.token.trim()&&(!S.D||S.source!=='import'||nowS()-(S.importedAt||0)>30*60))refreshLive(false);
   else syncNow();
 }
