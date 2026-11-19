@@ -390,8 +390,9 @@ ol.steps{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
 .faq summary{cursor:pointer;font-weight:600}
 .faq p{margin:8px 0 0;max-width:70ch;line-height:1.5}
 
-/* the EN button after each sentence: the only thing that shows the English */
-.trbtn{display:inline-block;vertical-align:middle;margin:0 8px 0 5px;padding:3px 8px;font:700 11px/1.2 Ubuntu,system-ui,sans-serif;letter-spacing:.06em;color:var(--ink3);background:var(--card2);border:1px solid var(--line);border-radius:99px;cursor:help;user-select:none}
+/* the Translate button after each sentence: the only thing that shows the English */
+.trbtn{display:inline-flex;align-items:center;gap:5px;vertical-align:middle;margin:0 10px 0 6px;padding:4px 10px 4px 8px;font:600 12px/1.2 Ubuntu,system-ui,sans-serif;color:var(--ink2);background:var(--card2);border:1px solid var(--ink3);border-radius:99px;cursor:pointer;user-select:none;white-space:nowrap}
+.trbtn svg{flex:none}
 .trbtn:hover,.trbtn:focus-visible{color:var(--bg);background:var(--ink);border-color:var(--ink);outline:none}
 
 </style>
@@ -1953,13 +1954,13 @@ function rdTok(t,c,hideUnk){
 }
 function rdTextHtml(){
   const R=S.rd,c=vctx(),hideUnk=!c.live&&!c.known.size;
-  const sents=R.sents.map((s,i)=>`<span class="sent" data-i="${i}">${s.t.map(t=>rdTok(t,c,hideUnk)).join('')}</span><button type="button" class="trbtn" data-i="${i}" aria-label="Show the English translation" title="Show the English translation">EN</button>`);
+  const sents=R.sents.map((s,i)=>`<span class="sent" data-i="${i}">${s.t.map(t=>rdTok(t,c,hideUnk)).join('')}</span><button type="button" class="trbtn" data-i="${i}" aria-label="Show the English translation" title="Show the English translation"><svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path d="M2.5 2.5h11a1 1 0 0 1 1 1v6.5a1 1 0 0 1-1 1H8l-3.2 2.7a.4.4 0 0 1-.65-.3V11h-1.65a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1z" fill="currentColor"/></svg><span>Translate</span></button>`);
   const kan=[...new Set(R.sents.flatMap(s=>s.t.flatMap(t=>[...tokBase(t)].filter(isKanjiCh))))];
   const chips=kan.map(ch=>{const m=kanjiGloss(ch);const unk=!hideUnk&&!c.seen(ch);return`<span class="chip${unk?' unkchip':''}"><span class="jpc">${esc(ch)}</span> ${esc(m)}</span>`}).join('');
   const newN=hideUnk?0:kan.filter(k=>!c.seen(k)).length;
   return`<section class="card reader"><header><h3>${esc(R.title||(R.lv?'JLPT N'+R.lv+' sentences':'Sentences for you'))}</h3><span class="sub">${R.lv?'N'+R.lv+' practice':'Matched to your progress'}${hideUnk?'':' · '+(newN?newN+' kanji you have not started (dotted)':'every kanji is one you know')}</span></header>
     <div class="jp ${R.list?'jlist':''} fg-${S.cfg.rdFg}" id="jp">${R.list?sents.map(x=>`<div>${x}</div>`).join(''):`<p>${sents.join('')}</p>`}</div>
-    <p class="hint rthint">${hideUnk?'Hover over a blurred word, or tap it, to see how it is read.':'Words with a kanji you have not learned yet always show their reading (dotted line). Hover over a blurred reading, or tap it, to see the others.'} Hover over (or tap) the <b>EN</b> button after a sentence to see the English. The two never get in each other's way.</p>
+    <p class="hint rthint">${hideUnk?'Hover over a blurred word, or tap it, to see how it is read.':'Words with a kanji you have not learned yet always show their reading (dotted line). Hover over a blurred reading, or tap it, to see the others.'} Hover over (or tap) the <b>Translate</b> button after a sentence to see its English. Hovering a word only shows its reading.</p>
     <details style="margin-top:10px"><summary>Show the full translation</summary><div class="fulltr">${R.sents.map(s=>`<p>${esc(s.tr)}</p>`).join('')}</div></details>
     <h4 class="subhead">Kanji in this text</h4><div class="tiles">${chips}</div></section>`;
 }
