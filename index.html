@@ -433,9 +433,11 @@ html{scrollbar-gutter:stable}
 .so .dt{fill:var(--rad)}
 .so text{font-size:13px;font-weight:700;fill:var(--ink3);font-family:var(--font)}
 .so.soanim{width:112px;height:112px}
-.so.soanim .st{stroke-dasharray:1;stroke-dashoffset:1;animation:sodraw .6s ease-in-out forwards}
+.so.soanim .st{stroke-dasharray:1 2;stroke-dashoffset:1;animation:sodraw .6s ease-in-out forwards}
+.so.soanim .sd{fill:var(--rad);opacity:0;animation:sodot .9s linear forwards}
+@keyframes sodot{0%{opacity:1}70%{opacity:1}100%{opacity:0}}
 @keyframes sodraw{to{stroke-dashoffset:0}}
-@media(prefers-reduced-motion:reduce){.so.soanim .st{animation:none;stroke-dashoffset:0}}
+@media(prefers-reduced-motion:reduce){.so.soanim .st{animation:none;stroke-dashoffset:0}.so.soanim .sd{animation:none}}
 .soanimrow{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap}
 .sosteps{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
 
@@ -474,6 +476,31 @@ button.chip.kchip{font-family:inherit;cursor:pointer;color:var(--ink)}
 .tot tr.sum th,.tot tr.sum td{font-weight:700;border-top:2px solid var(--line)}
 .tot .dot{margin-right:8px}
 .builtin p b{text-transform:none;letter-spacing:0;font-size:inherit;color:inherit;font-weight:700}
+
+/* ---------- writing library ---------- */
+.wgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:8px}
+.wtile{display:flex;flex-direction:column;align-items:center;gap:1px;padding:8px 4px 7px;border-radius:10px;border:0;border-bottom:3px solid rgba(0,0,0,.22);font-family:inherit;cursor:pointer;color:#fff;background:var(--lock);min-width:0}
+.wtile .jpc{font-size:26px;line-height:1.15}
+.wtile .ws{font-size:11px;font-weight:700;line-height:1.2;text-align:center}
+.wtile .wd{font-size:11px;opacity:.9;line-height:1.2}
+.wtile.k0{background:var(--card2);color:var(--ink);border:1px solid var(--line);border-bottom-width:3px}
+.wtile.k1{background:var(--app)}.wtile.k2{background:var(--guru)}.wtile.k3{background:var(--mas)}.wtile.k4{background:var(--enl)}.wtile.k5{background:var(--bur)}
+.wtile.lock{opacity:.55}
+.wtile.due{box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--kan)}
+.wtile:hover{filter:brightness(1.07)}
+.lvst{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:99px;background:var(--card2);color:var(--ink2);border:1px solid var(--line);margin-left:6px;vertical-align:1px}
+.lvst.ok{background:var(--good);color:#fff;border-color:transparent}.lvst.op{background:var(--rad);color:#fff;border-color:transparent}
+.wlbits{font-size:13px;margin:-2px 0 10px}
+.lead2{font-size:17px;margin:2px 0 6px}
+.fclist{display:grid;gap:0;margin-top:12px;border-top:1px solid var(--line)}
+.fcrow{display:grid;grid-template-columns:70px minmax(0,1fr) minmax(0,1.3fr);gap:10px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px;align-items:baseline}
+@media(max-width:620px){.fcrow{grid-template-columns:62px minmax(0,1fr)}.fcrow span:last-child{grid-column:1 / -1;padding-left:72px}}
+
+/* long lists: the browser skips layout and painting of groups that are far off screen */
+.lgroup{content-visibility:auto;contain-intrinsic-size:auto 220px}
+
+/* shown only if building a page takes noticeably long */
+#app.busy{opacity:.55;transition:opacity .1s .15s}
 
 </style>
 </head>
@@ -1013,7 +1040,7 @@ async function refreshLive(manual){
 }
 
 /* ---------- app state ---------- */
-const defaultCfg=()=>({range:90,fc:'days',src:{joyo:true,freq:true,jlpt:true},order:'freq',batch:5,size:15,rsize:20,view:'grid',status:'all',hideIntro:false,hideVIntro:false,vlv:{5:true,4:true,3:true,2:true,1:true},vorder:'ready',vready:false,vbatch:5,vrsize:20,vstatus:'all',rdMode:'me',rdNew:1,rdLen:5,rdLevel:5,rdFg:'hover',hwFrom:1,hwTo:0,hwSize:20,hwBatch:5,hwRsize:10,hwThr:80,hwHideIntro:false,rdSeen:[],cov:5,lsort:'level',lsrc:'all',lstat:'all',lvr:false});
+const defaultCfg=()=>({range:90,fc:'days',src:{joyo:true,freq:true,jlpt:true},order:'freq',batch:5,size:15,rsize:20,view:'grid',status:'all',hideIntro:false,hideVIntro:false,vlv:{5:true,4:true,3:true,2:true,1:true},vorder:'ready',vready:false,vbatch:5,vrsize:20,vstatus:'all',rdMode:'me',rdNew:1,rdLen:5,rdLevel:5,rdFg:'hover',hwFrom:1,hwTo:0,hwSize:20,hwBatch:5,hwRsize:10,hwThr:80,hwHideIntro:false,rdSeen:[],cov:5,lsort:'level',lsrc:'all',lstat:'all',lvr:false,wlLv:'open',wlSort:'order',wlStat:'all'});
 const S={route:'dashboard',D:null,raw:null,source:'none',importedAt:null,user:'_guest',srs:{},prac:{},mnem:{},mnemT:{},syn:{},synT:{},cfg:defaultCfg(),
   sel:new Set(),token:'',storeNote:'',watch:{cat:'leeches',type:'all',q:'',limit:40},lesson:null,quiz:null,loading:true,xq:'',xlimit:90,armed:false,vtab:'words',vq:'',vlimit:60,rd:null,hw:null};
 const ROUTES=['dashboard','watchlist','practice','extra-kanji','vocab','writing','library','stats','settings'];
@@ -1360,8 +1387,8 @@ function viewWelcome(){
     ['Practice',need,'A WaniKani-style quiz on any watchlist, or on the items you ticked. Type meanings in English and readings in romaji, which turns into kana as you type. It never changes your WaniKani SRS, so it is a safe place to drill what keeps slipping.'],
     ['Extra Kanji',free,'WaniKani teaches about 2,000 kanji. This section teaches the common ones it leaves out, from the joyo, newspaper-frequency and JLPT lists, with lessons, reviews, built-in mnemonics and room for your own. It has its own review schedule and never touches WaniKani.'],
     ['Vocab &amp; Reading',free,'<b>Vocab:</b> JLPT words WaniKani does not teach, offered first from kanji you already know, each with a memory hook. <b>Reading:</b> short Japanese sentences chosen to fit the kanji you know. Hover a sentence (or tap it) for the English. Kanji you have not learned yet always show their reading; known kanji show it blurred until you hover. It gets sharper once you connect, because it can then see which kanji you know.'],
-    ['Writing',free,'Learn to write the kanji WaniKani teaches, level by level. You trace each stroke, then write it from numbered start points with less help each round, then from memory. Later it comes back as reviews with WaniKani-like timings. It is a separate system from WaniKani.'],
-    ['Library',free,'Every WaniKani kanji and then every Kani Plus kanji in one place, coloured by your SRS stage. Organise them by WaniKani level, joyo grade or frequency to see which kanji you know where. Tap one for readings, meaning, stroke order, the mnemonic and when it is next due. With your WaniKani data connected you can also list radicals and vocabulary when organised by level. Works without connecting, but the colours need your data.'],
+    ['Writing',free,'Learn to write the kanji WaniKani teaches, level by level. You trace each stroke, then write it from numbered start points with less help each round, then from memory. Later it comes back as reviews with WaniKani-like timings. It is a separate system from WaniKani. The Library tab lists every kanji by level with its writing stage and next review, and forecasts when the next level can open.'],
+    ['Library',free,'Every WaniKani kanji and then every Kani Plus kanji in one place, coloured by your SRS stage. Organise them by WaniKani level, JLPT level (N5 to N1), joyo grade or frequency to see which kanji you know where. Tap one for readings, meaning, stroke order, the mnemonic and when it is next due. With your WaniKani data connected you can also list radicals and vocabulary when organised by level. Works without connecting, but the colours need your data.'],
     ['Stats',need,'Item totals by type (radicals, kanji, vocabulary) for WaniKani and for Kani Plus, then days per level, accuracy per level and per day, the hours you review at, a forecast of upcoming reviews, and a coverage chart: how much of the joyo grades, JLPT levels and frequency bands you already know, from WaniKani and from Extra Kanji together.']
   ];
   const faq=[
@@ -1744,7 +1771,7 @@ function openItem(id){
   m.hidden=false;
   ensureWkMn(it);
 }
-function closeModal(){const m=$('#modal');m.hidden=true;m.innerHTML='';if(S.route==='extra-kanji'||S.route==='watchlist')softRefreshList();else if(S.route==='library')libRefresh()}
+function closeModal(){const m=$('#modal');m.hidden=true;m.innerHTML='';if(S.route==='extra-kanji'||S.route==='watchlist')softRefreshList();else if(S.route==='library')libRefreshIfChanged()}
 function softRefreshList(){const l=$('#xlist');if(l&&!S.lesson)l.innerHTML=xListHtml()}
 
 /* ---------- Vocab: JLPT words (mostly) not taught by WaniKani ---------- */
@@ -2185,6 +2212,7 @@ function hwStats(){
 
 /* ---------- the Writing page ---------- */
 function viewWriting(){
+  if(S.wtab==='library')return`<div class="sectionhead"><h2>Writing</h2><span class="muted">Every kanji by level, with its stage and next review</span></div>${guestNote()}${hwTabs()}${viewWritingLibrary()}`;
   const levels=hwLevels(),pool=hwPool(levels),batch=Math.min(hwBatch(),pool.length),st=hwStats(),my=hwMyLevel();
   const firstLocked=levels.find(l=>!l.open),lockNote=firstLocked?(()=>{const p=levels[firstLocked.lv-2];return p?`Level ${firstLocked.lv} opens when ${Math.max(0,p.need-p.guru)} more level ${p.lv} kanji reach Guru.`:''})():'';
   const lessonSub=batch?'Learn '+batch+' new kanji':(lockNote||'Every kanji is started');
@@ -2198,6 +2226,7 @@ function viewWriting(){
   const bl=[3,5,8],tl=[60,80,100];
   const free=hwFreeRange(),opts=n=>Array.from({length:60},(_,i)=>`<option value="${i+1}"${i+1===n?' selected':''}>${i+1}</option>`).join('');
   return`<div class="sectionhead"><h2>Writing</h2><span class="muted">${S.cfg.hwHideIntro?'<button class="linkbtn" data-act="hwShowIntro">How does this work?</button> · ':''}Write the kanji from WaniKani, level by level</span></div>${guestNote()}
+  ${hwTabs()}
   ${intro}
   <div class="bigs">
     <button class="big pink" data-act="hwLessons"${batch?'':' disabled'}><span><span class="bl">Lessons</span><br><span class="bt">${esc(lessonSub)}</span></span><span class="bn">${batch}</span></button>
@@ -2599,7 +2628,8 @@ function strokeD(p){
 const SO_GUIDE='<path class="gd" d="M54.5 0V109M0 54.5H109"/>';
 function soAnimInner(ch){
   const st=parseStrokes(KWd[ch][4]);
-  return SO_GUIDE+st.map((p,i)=>`<path class="st" pathLength="1" d="${strokeD(p)}" style="animation-delay:${(i*.7).toFixed(2)}s"/>`).join('');
+  return SO_GUIDE+st.map((p,i)=>`<path class="st" pathLength="1" d="${strokeD(p)}" style="animation-delay:${(i*.7).toFixed(2)}s"/>`).join('')
+    +st.map((p,i)=>`<circle class="sd" cx="${p[0][0]}" cy="${p[0][1]}" r="5" style="animation-delay:${(i*.7).toFixed(2)}s"/>`).join('');
 }
 function strokeOrderHtml(ch){
   const d=KWd[ch];
@@ -2703,6 +2733,7 @@ function libEntries(){
     const a=AKM.get(e.ch);
     e.gr=e.src==='kp'?(e.k.joyo?e.k.gr:0):(a&&LIB_JOYO.includes(a.gr)?a.gr:0);
     e.fq=e.src==='kp'?e.k.fq:(a?a.fq:0);
+    e.jl=e.src==='kp'?e.k.jl:(a?a.jl:0);
   }
   return out;
 }
@@ -2731,6 +2762,7 @@ function libGroups(){
     if(kp.length){const g=mk('kp','Not on WaniKani','Kani Plus kanji, most used first');g.kp=kp}
   }else{
     const bucket=e=>{
+      if(mode==='jlpt')return e.jl?[6-e.jl,'JLPT N'+e.jl]:[99,'Not in the JLPT kanji lists'];
       if(mode==='grade')return e.gr?[e.gr===8?7:e.gr,e.gr===8?'Secondary school (grade 8)':'Grade '+e.gr]:[9,'Not in the Joyo list'];
       return e.fq?[Math.ceil(e.fq/250),'Frequency '+fmtN((Math.ceil(e.fq/250)-1)*250+1)+' to '+fmtN(Math.ceil(e.fq/250)*250)]:[99,'Outside the 2,500 most used'];
     };
@@ -2767,7 +2799,10 @@ function libListHtml(){
   }
   return sections.join('')||'<p class="muted" style="padding:10px 2px">Nothing matches.</p>';
 }
-function libRefresh(){const l=$('#liblist');if(l)l.innerHTML=libListHtml()}
+/* a cheap fingerprint of every kanji's stage and due time, so the list is rebuilt only when something really changed */
+function libStamp(){let h=0;for(const k in S.srs){const r=S.srs[k];h=(h*31+r.s+((r.n||0)%9973))|0}return h+':'+Object.keys(S.srs).length}
+function libRefresh(){const l=$('#liblist');if(l){l.innerHTML=libListHtml();S._libStamp=libStamp()}}
+function libRefreshIfChanged(){if(S._libStamp!==libStamp())softRender()}
 function viewLibrary(){
   const wkN=Object.keys(KWd).length+(S.D?[...wkKanjiMap().keys()].filter(ch=>!KWd[ch]).length:0),kpN=visibleNew().length,lvl=S.cfg.lsort==='level',conn=!!S.D;
   const seg=(act,cur,opts,label)=>`<div class="seg" role="group" aria-label="${label}">${opts.map(o=>`<button data-act="${act}" data-v="${o[0]}" aria-pressed="${cur===o[0]}">${o[1]}</button>`).join('')}</div>`;
@@ -2776,13 +2811,13 @@ function viewLibrary(){
   <section class="card">
     <p class="muted" style="margin-bottom:6px">Every kanji, coloured by your stage. Tap one for readings, meaning, stroke order, mnemonic and when it is next due.${conn?'':' <a href="#settings">Connect WaniKani</a> to see your own stages on the WaniKani kanji.'}</p>
     <div class="legend" style="margin:8px 0 2px">${[0,1,2,3,4,5].map(i=>legendBox(STAGE_COL[i],GROUP_NAMES[i])).join('')}<span class="faint">Dim tiles are locked on WaniKani</span></div>
-    <div class="optrow"><span class="muted">Organise by</span>${seg('lsort',S.cfg.lsort,[['level','WaniKani level'],['grade','Joyo grade'],['freq','Frequency']],'Organise by')}</div>
+    <div class="optrow"><span class="muted">Organise by</span>${seg('lsort',S.cfg.lsort,[['level','WaniKani level'],['jlpt','JLPT level'],['grade','Joyo grade'],['freq','Frequency']],'Organise by')}</div>
     <div class="optrow"><span class="muted">Show</span>${seg('lsrc',S.cfg.lsrc,[['all','Everything'],['wk','WaniKani'],['kp','Kani Plus']],'Show')}${seg('lstat',S.cfg.lstat,[['all','Any stage'],['new','Not started'],['learning','Apprentice'],['known','Guru and up']],'Stage')}</div>
     <div class="optrow"><span class="muted">Also list</span><div class="seg" role="group" aria-label="Also list radicals and vocabulary">${[[false,'Kanji only'],[true,'Radicals and vocabulary']].map(o=>`<button data-act="lvr" data-v="${o[0]}" aria-pressed="${!!S.cfg.lvr===o[0]}"${vrDis?' disabled':''}>${o[1]}</button>`).join('')}</div>
-      ${vrDis?`<span class="faint">${!conn?'Connect WaniKani to list radicals and vocabulary.':'Only when organised by WaniKani level, because radicals and vocabulary are not in the Joyo list.'}</span>`:''}</div>
+      ${vrDis?`<span class="faint">${!conn?'Connect WaniKani to list radicals and vocabulary.':'Only when organised by WaniKani level, because radicals and vocabulary are not in the JLPT, Joyo or frequency lists.'}</span>`:''}</div>
     <div class="optrow"><input type="search" class="field" id="lq" placeholder="Search kanji, meaning or reading" value="${esc(S.lq||'')}" aria-label="Search the library" style="flex:1 1 220px"></div>
   </section>
-  <div id="liblist">${libListHtml()}</div>`;
+  <div id="liblist">${(S._libStamp=libStamp(),libListHtml())}</div>`;
 }
 
 /* ---------- events ---------- */
@@ -2800,6 +2835,156 @@ document.addEventListener('click',e=>{
 });
 document.addEventListener('input',e=>{
   if(e.target.id==='lq'){S.lq=e.target.value;clearTimeout(S._lq);S._lq=setTimeout(libRefresh,150)}
+});
+
+/* ---------- Writing library: every kanji by level, with its stage, next review and a level-up forecast ---------- */
+const hoursToGuru=s=>SRS_HOURS.slice(s+1,5).reduce((a,b)=>a+b,0);
+/* When could this kanji reach Guru? Assumes it is learned right away if it is not started yet, and that every review is done the moment it is due and answered correctly. */
+function hwGuruAt(r,t,openAt){
+  if(r&&r.s>=5)return t;
+  if(r&&r.s>=1)return Math.max(r.n||t,t)+hoursToGuru(Math.min(4,r.s))*HOUR;
+  return Math.max(t,openAt)+(SRS_HOURS[1]+hoursToGuru(1))*HOUR;
+}
+/* For every level: when it opens and when it has enough kanji at Guru to open the next one */
+function hwForecast(levels){
+  const t=nowS(),out=[];let prevPass=t;
+  for(const L of levels){
+    const list=HWL[L.lv],openAt=L.open?t:Math.max(t,prevPass);
+    let passAt=openAt,learn=0;
+    if(!L.skipped&&list.length&&L.need>0){
+      const times=list.map(ch=>{const r=S.srs['h'+ch];return{ch,at:hwGuruAt(r,t,openAt),fresh:!(r&&r.s>=1)}}).sort((a,b)=>a.at-b.at);
+      const pick=times.slice(0,Math.min(L.need,times.length));
+      passAt=pick[pick.length-1].at;learn=pick.filter(x=>x.fresh).length;
+    }
+    out.push({openAt,passAt,learn});
+    prevPass=passAt;
+  }
+  return out;
+}
+const hwStageText=r=>r&&r.s>=1?stageName(r.s):'Not started';
+const shortIn=s=>{const m=Math.max(1,Math.round(s/60));return m<90?m+' min':m<36*60?Math.round(m/60)+' h':Math.round(m/1440)+' d'};
+const whenText=ts=>ts<=nowS()+60?'now':fmtWhen(ts)+' (in '+fmtIn(ts-nowS())+')';
+function hwTabs(){
+  const t=[['study','Learn and review','Lessons, reviews and free practice'],['library','Library','Every kanji by level: stage, next review and when you level up']];
+  return`<div class="bigtabs" role="group" aria-label="Writing section">${t.map(s=>`<button class="bigtab" data-act="wsub" data-v="${s[0]}" aria-pressed="${(S.wtab||'study')===s[0]}"><b>${s[1]}</b><span>${s[2]}</span></button>`).join('')}</div>`;
+}
+
+/* one kanji, from the Writing point of view */
+function openWriteKanji(ch){
+  const d=KWd[ch];if(!d)return;
+  const r=S.srs['h'+ch],t=nowS(),levels=hwLevels(),L=levels[d[0]-1],fc=hwForecast(levels)[d[0]-1];
+  const g=r&&r.s>=1?stageGroup(r.s):0,pr=S.prac['h'+ch];
+  const rows=[['Writing stage',hwStageText(r)]];
+  if(r&&r.s>=1){
+    rows.push(['Next review',r.s>=9?'Burned, no more reviews':r.n?nextText(r.n):'–']);
+    rows.push(['Reaches Guru',r.s>=5?'Already there':'About '+whenText(hwGuruAt(r,t,t))+' if every review is right']);
+    if(r.c||r.w)rows.push(['Review record',`${r.c} right, ${r.w} wrong`]);
+  }else rows.push(['Next review',L.open&&!L.skipped?'Starts after you learn it':L.skipped?'Level skipped, not offered in lessons':'Level '+d[0]+' is locked until '+(L.lv>1?'level '+(L.lv-1)+' is at '+hwThr()+'% Guru':'you start')]);
+  if(pr)rows.push(['Written so far',`${pr[0]} clean, ${pr[1]} with a slip`]);
+  rows.push(['In Writing level',`${d[0]} · ${L.guru} of ${L.total} at Guru, ${L.need} needed`]);
+  if(!L.passed&&!L.skipped)rows.push(['Level '+(d[0]+1)+' opens','About '+whenText(fc.passAt)]);
+  const canLearn=!(r&&r.s>=1)&&L.open&&!L.skipped;
+  const acts=`${canLearn?`<button class="btn" data-act="wkLearn" data-ch="${esc(ch)}">Learn this now</button>`:''}<button class="btn" data-act="wkWrite" data-ch="${esc(ch)}">Write it (practice)</button>${!(r&&r.s>=1)?`<button class="btn" data-act="wkKnow" data-ch="${esc(ch)}">I already know this</button>`:''}`;
+  $('#modal').innerHTML=`<div class="sheet kdetail" role="dialog" aria-modal="true" aria-label="Kanji writing details">
+    <div style="display:flex;gap:14px;align-items:center"><span class="tile lg t-k ksrs k${g}">${esc(ch)}</span><div style="min-width:0"><h3>${esc(d[1])}</h3><div class="muted" style="margin-top:2px">${esc(d[2])}</div>
+      <div style="margin-top:6px"><span class="pill s${g}">${esc(hwStageText(r))}</span> <span class="tag wk">Writing · WaniKani level ${d[0]}</span></div></div></div>
+    <dl class="kv">${rows.map(x=>`<dt>${x[0]}</dt><dd>${esc(x[1])}</dd>`).join('')}</dl>
+    ${strokeOrderHtml(ch)}
+    <p class="hint" style="margin-top:12px"><button class="linkbtn" data-act="kanji" data-ch="${esc(ch)}">Readings, mnemonic and WaniKani details</button></p>
+    <div class="tools" style="margin-top:16px;justify-content:flex-end">${acts}<button class="btn primary" data-act="closeModal">Close</button></div></div>`;
+  $('#modal').hidden=false;
+}
+
+/* ---------- the Library tab ---------- */
+function wlTile(ch,L,t){
+  const r=S.srs['h'+ch],g=r&&r.s>=1?stageGroup(r.s):0,due=r&&r.s>=1&&r.s<9&&r.n&&r.n<=t;
+  const st=r&&r.s>=1?stageName(r.s):L.open&&!L.skipped?'Not started':L.skipped?'Skipped':'Locked';
+  const wd=r&&r.s>=1?(r.s>=9?'burned':due?'due now':r.n?'in '+shortIn(r.n-t):''):L.open&&!L.skipped?'lesson ready':'';
+  return`<button class="wtile k${g}${due?' due':''}${!r&&(!L.open||L.skipped)?' lock':''}" data-act="wkanji" data-ch="${esc(ch)}" title="${esc(KWd[ch][1]+' · '+KWd[ch][2])}"><span class="jpc">${esc(ch)}</span><span class="ws">${esc(st)}</span><span class="wd">${esc(wd)}</span></button>`;
+}
+function wlMatch(ch){
+  const r=S.srs['h'+ch],t=nowS(),st=S.cfg.wlStat,q=(S.wlq||'').trim().toLowerCase(),g=r&&r.s>=1?stageGroup(r.s):0;
+  if(st==='new'&&g!==0)return false;
+  if(st==='learning'&&g!==1)return false;
+  if(st==='known'&&g<2)return false;
+  if(st==='due'&&!(r&&r.s>=1&&r.s<9&&r.n&&r.n<=t))return false;
+  return !q||ch.includes(q)||KWd[ch][1].toLowerCase().includes(q)||KWd[ch][2].includes(q);
+}
+function wlOrder(list){
+  const mode=S.cfg.wlSort,rs=ch=>S.srs['h'+ch];
+  if(mode==='due')return list.slice().sort((a,b)=>{const x=rs(a),y=rs(b),nx=x&&x.s>=1&&x.s<9&&x.n?x.n:Infinity,ny=y&&y.s>=1&&y.s<9&&y.n?y.n:Infinity;return nx-ny});
+  if(mode==='stage')return list.slice().sort((a,b)=>((rs(b)?rs(b).s:0)-(rs(a)?rs(a).s:0)));
+  return list;
+}
+function wlListHtml(levels,fcs){
+  const t=nowS(),firstLocked=levels.findIndex(l=>!l.open),my=hwMyLevel();
+  const frontier=levels.findIndex(l=>l.open&&!l.passed);
+  const sections=[];
+  for(const L of levels){
+    if(S.cfg.wlLv!=='all'&&!(L.open||L.lv===(firstLocked>=0?levels[firstLocked].lv:0)))continue;
+    const list=HWL[L.lv];if(!list.length)continue;
+    const shown=wlOrder(list.filter(wlMatch));if(!shown.length)continue;
+    const fc=fcs[L.lv-1],g=[0,0,0,0,0,0];let due=0,nextAt=null;
+    for(const ch of list){const r=S.srs['h'+ch];if(r&&r.s>=1){g[stageGroup(r.s)]++;if(r.s<9&&r.n){if(r.n<=t)due++;else if(nextAt==null||r.n<nextAt)nextAt=r.n}}}
+    const state=L.skipped?['Skipped','']:!L.open?['Locked','lk']:L.passed?['Passed','ok']:['Open','op'];
+    const bits=[];
+    if(due)bits.push(`${due} due now`);
+    if(nextAt)bits.push('next review in '+fmtIn(nextAt-t));
+    if(!L.open)bits.push('opens about '+whenText(fc.openAt));
+    else if(!L.passed&&!L.skipped)bits.push(`level ${L.lv+1} opens about ${whenText(fc.passAt)}`);
+    if(L.lv===my)bits.push('your WaniKani level');
+    const mt=[1,2,3,4,5].map(i=>({v:g[i],w:100*g[i]/list.length,c:STAGE_COL[i]}));
+    sections.push(`<details class="lgroup wl" ${L.lv===(frontier>=0?levels[frontier].lv:-1)||due?'open':''}><summary><span class="lgt"><b>Level ${L.lv}</b> <span class="lvst ${state[1]}">${state[0]}</span><span class="muted"> · ${L.guru} of ${L.total} at Guru${L.passed||L.skipped?'':', need '+L.need}</span></span><span class="lgm">${meterSeg(mt)}</span></summary>
+      ${bits.length?`<p class="wlbits muted">${esc(bits.join(' · '))}</p>`:''}<div class="wgrid">${shown.map(ch=>wlTile(ch,L,t)).join('')}</div></details>`);
+  }
+  return sections.join('')||'<p class="muted" style="padding:10px 2px">Nothing matches.</p>';
+}
+function wlRefresh(){const l=$('#wllist');if(l)l.innerHTML=wlListHtml(hwLevels(),hwForecast(hwLevels()))}
+function wlForecastCard(levels,fcs){
+  const t=nowS(),fi=levels.findIndex(l=>l.open&&!l.passed),my=hwMyLevel();
+  if(fi<0)return`<section class="card"><header><h3>Level-up forecast</h3></header><p>Every writing level is passed or skipped. Nothing left to unlock.</p></section>`;
+  const L=levels[fi],f=fcs[fi],rows=[];
+  for(let i=fi;i<Math.min(levels.length,fi+4);i++){
+    const l=levels[i],c=fcs[i];
+    rows.push(`<div class="fcrow"><b>Level ${l.lv}</b><span>${i===fi?`${l.guru} of ${l.total} at Guru, ${l.need} needed`:`opens about ${esc(whenText(c.openAt))}`}</span><span class="muted">${i<levels.length-1?`opens level ${l.lv+1}: about ${esc(whenText(c.passAt))}`:'last level'}</span></div>`);
+  }
+  const next=L.lv<HWLV?`Level ${L.lv+1} can open as early as <b>${esc(whenText(f.passAt))}</b>.`:'This is the last level.';
+  const need=Math.max(0,L.need-L.guru);
+  return`<section class="card"><header><h3>Level-up forecast</h3><span class="sub">Writing level ${L.lv}${my?` · WaniKani level ${my}`:''}</span></header>
+    <p class="lead2">${next}</p>
+    <p class="muted">${need?`${need} more kanji of level ${L.lv} must reach Guru${f.learn?`, and ${f.learn} of them still ${f.learn===1?'has':'have'} to be learned`:''}.`:'Enough kanji are at Guru.'} This assumes you learn them right away and answer every review correctly the moment it is due, so it is the earliest it can happen.</p>
+    <div class="fclist">${rows.join('')}</div></section>`;
+}
+function viewWritingLibrary(){
+  const levels=hwLevels(),fcs=hwForecast(levels),st=hwStats();
+  const seg=(act,cur,opts,label)=>`<div class="seg" role="group" aria-label="${label}">${opts.map(o=>`<button data-act="${act}" data-v="${o[0]}" aria-pressed="${cur===o[0]}">${o[1]}</button>`).join('')}</div>`;
+  return`${wlForecastCard(levels,fcs)}
+  <section class="card">
+    <p class="muted" style="margin-bottom:6px">${fmtN(st.started)} of ${fmtN(HW_ALL.length)} kanji started · ${fmtN(st.due)} due now. Each tile shows the kanji, its writing stage and when its next review is due. Tap one for stroke order and details.</p>
+    <div class="legend" style="margin:8px 0 2px">${[0,1,2,3,4,5].map(i=>legendBox(STAGE_COL[i],GROUP_NAMES[i])).join('')}<span class="faint">A ringed tile is due now</span></div>
+    <div class="optrow"><span class="muted">Levels</span>${seg('wlLv',S.cfg.wlLv,[['open','Open levels'],['all','All 60']],'Levels shown')}${seg('wlSort',S.cfg.wlSort,[['order','Lesson order'],['due','Next review'],['stage','Stage']],'Order inside a level')}</div>
+    <div class="optrow"><span class="muted">Show</span>${seg('wlStat',S.cfg.wlStat,[['all','Any stage'],['new','Not started'],['learning','Apprentice'],['known','Guru and up'],['due','Due now']],'Stage')}</div>
+    <div class="optrow"><input type="search" class="field" id="wlq" placeholder="Search kanji, meaning or reading" value="${esc(S.wlq||'')}" aria-label="Search the writing library" style="flex:1 1 220px"></div>
+  </section>
+  <div id="wllist">${wlListHtml(levels,fcs)}</div>`;
+}
+
+document.addEventListener('click',e=>{
+  const el=e.target.closest('[data-act]');if(!el)return;
+  const d=el.dataset;
+  switch(d.act){
+    case'wsub':S.wtab=d.v;render();break;
+    case'wkanji':openWriteKanji(d.ch);break;
+    case'wlLv':setCfg('wlLv',d.v);break;
+    case'wlSort':setCfg('wlSort',d.v);break;
+    case'wlStat':setCfg('wlStat',d.v);break;
+    case'wkLearn':closeModal();hwStartLessons([d.ch]);break;
+    case'wkWrite':closeModal();hwStartFree([d.ch]);break;
+    case'wkKnow':{const t=nowS();S.srs['h'+d.ch]={s:5,n:t+SRS_HOURS[5]*HOUR,c:0,w:0,u:t};hwSave();closeModal();render();toast('Marked as known. It comes back for review at Guru 1.');break}
+  }
+});
+document.addEventListener('input',e=>{
+  if(e.target.id==='wlq'){S.wlq=e.target.value;clearTimeout(S._wlq);S._wlq=setTimeout(wlRefresh,150)}
 });
 
 /* ---------- optional cross-device sync (needs the sync server URL set at the top of the page) ---------- */
@@ -3008,7 +3193,14 @@ function migrateLegacy(){
     if(old&&typeof old.s==='string')LS.del(n);
   }
 }
-function setCfg(k,v){S.cfg[k]=v;persistLater('cfg',()=>S.cfg);render()}
+/* Changing a setting: let the browser paint the press first, then rebuild the page. */
+let _rTok=0;
+function softRender(){const tok=++_rTok;requestAnimationFrame(()=>setTimeout(()=>{if(tok===_rTok)render()},0))}
+function setCfg(k,v){S.cfg[k]=v;persistLater('cfg',()=>S.cfg);softRender()}
+document.addEventListener('click',e=>{
+  const b=e.target.closest&&e.target.closest('.seg button[aria-pressed]');
+  if(b&&!b.disabled)b.parentElement.querySelectorAll('button[aria-pressed]').forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));
+},true);
 
 /* ---------- shell and routing ---------- */
 function render(){
@@ -3037,14 +3229,26 @@ function go(h){
   try{if(location.hash!=='#'+S.route)history.pushState(null,'','#'+S.route)}catch(e){}
   render();scrollTo(0,0);
 }
-addEventListener('hashchange',()=>{route();scrollTo(0,0)});
-addEventListener('popstate',()=>{route();scrollTo(0,0)});
+/* Moving between pages from a link: do the cheap part now (highlight the tab, so the browser can paint straight away)
+   and build the page right after that paint. A big page then never delays the response to the tap. */
+let _navTok=0;
+function goSoft(h,push){
+  setRoute(h);
+  try{if(push&&location.hash!=='#'+S.route)history.pushState(null,'','#'+S.route)}catch(e){}
+  $$('.tabs a').forEach(a=>a.setAttribute('aria-current',a.dataset.r===S.route?'page':'false'));
+  const app=$('#app'),tok=++_navTok;
+  app.classList.add('busy');scrollTo(0,0);
+  requestAnimationFrame(()=>setTimeout(()=>{if(tok!==_navTok)return;app.classList.remove('busy');render();scrollTo(0,0)},0));
+}
+const routeSoft=()=>{let h='';try{h=location.hash.replace('#','')}catch(e){}goSoft(h,false)};
+addEventListener('hashchange',routeSoft);
+addEventListener('popstate',routeSoft);
 document.addEventListener('click',e=>{
   const a=e.target.closest&&e.target.closest('a[href^="#"]');
   if(!a||e.defaultPrevented)return;
   const h=a.getAttribute('href').slice(1);
   if(!h)return;
-  e.preventDefault();go(h);
+  e.preventDefault();goSoft(h,true);
 },true);
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape'&&!$('#modal').hidden)closeModal();
