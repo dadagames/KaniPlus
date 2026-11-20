@@ -59,8 +59,8 @@ a{color:var(--s1)}
 .tabs a{padding:7px 12px;border-radius:8px;text-decoration:none;color:var(--ink2);font-weight:500;white-space:nowrap;touch-action:manipulation}
 .tabs .sh{display:none}
 @media(max-width:720px){
-  .tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:3px}
-  .tabs a{text-align:center;padding:7px 2px;font-size:13px;overflow:hidden;text-overflow:ellipsis}
+  .tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:3px}
+  .tabs a{text-align:center;padding:7px 1px;font-size:12.5px;overflow:hidden;text-overflow:ellipsis}
   .tabs .lg{display:none}.tabs .sh{display:inline}
 }
 .tabs a:hover{background:var(--card2)}
@@ -400,13 +400,88 @@ body:not(.ready) .wrap{visibility:hidden}
 main{min-height:70vh}
 html{scrollbar-gutter:stable}
 
+/* ---------- available now ---------- */
+.availgrid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.avp{border:1px solid var(--line);border-top:4px solid var(--c);border-radius:12px;padding:12px 14px;background:var(--card2);min-width:0}
+.avp.wk{--c:#e0008f}.avp.kp{--c:#0486d6}
+.avh{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.avbadge{font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:var(--c);padding:3px 10px;border-radius:99px}
+.avnums{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.avnum{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:10px 6px;text-decoration:none;font-family:inherit;cursor:pointer}
+.avnum b{font-size:30px;line-height:1.1;font-variant-numeric:tabular-nums}
+.avnum span{font-size:12px;color:var(--ink2);text-transform:uppercase;letter-spacing:.05em}
+.avnum.sm{font-size:22px;font-weight:700;font-variant-numeric:tabular-nums;padding:8px 6px}
+.avp.kp .avnum:not([disabled]):hover{border-color:var(--c)}
+.avp.wk .avnum:hover{border-color:var(--c)}
+.avnum[disabled]{opacity:.45;cursor:default}
+.avrow{display:grid;grid-template-columns:minmax(0,1fr) 72px 72px;gap:8px;align-items:center;margin-top:8px}
+.avrow.avhead{margin-top:0;font-size:12px;color:var(--ink3);text-transform:uppercase;letter-spacing:.05em;text-align:center}
+.avname{text-decoration:none;color:var(--ink);display:flex;flex-direction:column;min-width:0}
+.avname b{font-size:15px}.avname small{color:var(--ink3);font-size:12px}
+.avsub{font-size:13px;margin-top:8px}
+.avsub:empty{display:none}
+
+/* ---------- kanji popup ---------- */
+.tag.wk{--c:var(--kan)}
+.tile.ksrs.k0{background:var(--card2);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+.tile.ksrs.k1{background:var(--app)}.tile.ksrs.k2{background:var(--guru)}.tile.ksrs.k3{background:var(--mas)}.tile.ksrs.k4{background:var(--enl)}.tile.ksrs.k5{background:var(--bur)}
+.so{width:56px;height:56px;border:1px solid var(--line);border-radius:8px;background:var(--card);display:block}
+.so .gd{stroke:var(--line);stroke-width:1;stroke-dasharray:4 4;fill:none}
+.so .old,.so .st{fill:none;stroke:var(--ink);stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+.so .old{opacity:.55}
+.so .new{fill:none;stroke:var(--rad);stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
+.so .dt{fill:var(--rad)}
+.so text{font-size:13px;font-weight:700;fill:var(--ink3);font-family:var(--font)}
+.so.soanim{width:112px;height:112px}
+.so.soanim .st{stroke-dasharray:1;stroke-dashoffset:1;animation:sodraw .6s ease-in-out forwards}
+@keyframes sodraw{to{stroke-dashoffset:0}}
+@media(prefers-reduced-motion:reduce){.so.soanim .st{animation:none;stroke-dashoffset:0}}
+.soanimrow{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap}
+.sosteps{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+
+/* ---------- coloured kanji chips in the reader ---------- */
+button.chip.kchip{font-family:inherit;cursor:pointer;color:var(--ink)}
+.chip.kchip.k0{background:var(--card2)}
+.chip.kchip.k1{background:var(--app);color:#fff;border-color:transparent}.chip.kchip.k2{background:var(--guru);color:#fff;border-color:transparent}
+.chip.kchip.k3{background:var(--mas);color:#fff;border-color:transparent}.chip.kchip.k4{background:var(--enl);color:#fff;border-color:transparent}
+.chip.kchip.k5{background:var(--bur);color:#fff;border-color:transparent}
+.chip.kchip:hover{filter:brightness(1.08);box-shadow:0 0 0 2px var(--ink3)}
+
+/* ---------- library ---------- */
+.kgrid.wide{grid-template-columns:repeat(auto-fill,minmax(88px,1fr))}
+.kgrid.wide .tile{font-size:16px;height:44px;overflow:hidden;white-space:nowrap}
+.kgrid .tile.lock{opacity:.5}
+.kgrid .tile.k0.lock{opacity:.4}
+.lgroup{background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:12px 14px;margin-top:12px;min-width:0}
+.lgroup>summary{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;cursor:pointer;list-style:none;margin-bottom:10px}
+.lgroup>summary::-webkit-details-marker{display:none}
+.lgroup>summary::before{content:"▸";color:var(--ink3);margin-right:6px;display:inline-block;transition:transform .15s}
+.lgroup[open]>summary::before{transform:rotate(90deg)}
+.lgt{flex:1 1 200px;min-width:0}
+.lgm{display:flex;align-items:center;gap:10px;flex:0 1 280px;min-width:0}
+.lgm .meter{flex:1 1 90px;min-width:60px}
+.lsub{font-size:12px;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em;margin:12px 0 6px;font-weight:700}
+.lgroup:not([open])>summary{margin-bottom:0}
+.seg button[disabled]{opacity:.45;cursor:not-allowed}
+.optrow .faint{font-size:13px}
+
+/* ---------- item totals ---------- */
+.tot{max-height:none;overflow-y:visible}
+.tot th[scope="row"]{font-weight:500;color:var(--ink)}
+.tot thead th{position:static;padding-top:14px}
+.tot thead:first-child th{padding-top:4px}
+.tot td{text-align:right}.tot thead th:not(:first-child){text-align:right}
+.tot tr.sum th,.tot tr.sum td{font-weight:700;border-top:2px solid var(--line)}
+.tot .dot{margin-right:8px}
+.builtin p b{text-transform:none;letter-spacing:0;font-size:inherit;color:inherit;font-weight:700}
+
 </style>
 </head>
 <body>
 <div class="wrap">
 <header class="top">
   <a class="brand" href="#dashboard"><i>蟹</i>Kani Plus</a>
-  <nav class="tabs" aria-label="Sections"><a href="#dashboard" data-r="dashboard">Dashboard</a><a href="#watchlist" data-r="watchlist">Watchlist</a><a href="#practice" data-r="practice">Practice</a><a href="#extra-kanji" data-r="extra-kanji">Extra Kanji</a><a href="#vocab" data-r="vocab"><span class="lg">Vocab &amp; Reading</span><span class="sh">Vocab</span></a><a href="#writing" data-r="writing">Writing</a><a href="#stats" data-r="stats">Stats</a><a href="#settings" data-r="settings">Settings</a></nav>
+  <nav class="tabs" aria-label="Sections"><a href="#dashboard" data-r="dashboard"><span class="lg">Dashboard</span><span class="sh">Home</span></a><a href="#watchlist" data-r="watchlist">Watchlist</a><a href="#practice" data-r="practice">Practice</a><a href="#extra-kanji" data-r="extra-kanji"><span class="lg">Extra Kanji</span><span class="sh">Extra</span></a><a href="#vocab" data-r="vocab"><span class="lg">Vocab &amp; Reading</span><span class="sh">Vocab</span></a><a href="#writing" data-r="writing">Writing</a><a href="#library" data-r="library">Library</a><a href="#stats" data-r="stats">Stats</a><a href="#settings" data-r="settings">Settings</a></nav>
   <div class="chips"><button class="btn sm" id="refbtn" data-act="refresh" hidden>Refresh</button><span id="srcchip" class="chip">Not connected</span></div>
 </header>
 <main id="app"></main>
@@ -938,10 +1013,10 @@ async function refreshLive(manual){
 }
 
 /* ---------- app state ---------- */
-const defaultCfg=()=>({range:90,fc:'days',src:{joyo:true,freq:true,jlpt:true},order:'freq',batch:5,size:15,rsize:20,view:'grid',status:'all',hideIntro:false,hideVIntro:false,vlv:{5:true,4:true,3:true,2:true,1:true},vorder:'ready',vready:false,vbatch:5,vrsize:20,vstatus:'all',rdMode:'me',rdNew:1,rdLen:5,rdLevel:5,rdFg:'hover',hwFrom:1,hwTo:0,hwSize:20,hwBatch:5,hwRsize:10,hwThr:80,hwHideIntro:false,rdSeen:[],cov:5});
+const defaultCfg=()=>({range:90,fc:'days',src:{joyo:true,freq:true,jlpt:true},order:'freq',batch:5,size:15,rsize:20,view:'grid',status:'all',hideIntro:false,hideVIntro:false,vlv:{5:true,4:true,3:true,2:true,1:true},vorder:'ready',vready:false,vbatch:5,vrsize:20,vstatus:'all',rdMode:'me',rdNew:1,rdLen:5,rdLevel:5,rdFg:'hover',hwFrom:1,hwTo:0,hwSize:20,hwBatch:5,hwRsize:10,hwThr:80,hwHideIntro:false,rdSeen:[],cov:5,lsort:'level',lsrc:'all',lstat:'all',lvr:false});
 const S={route:'dashboard',D:null,raw:null,source:'none',importedAt:null,user:'_guest',srs:{},prac:{},mnem:{},mnemT:{},syn:{},synT:{},cfg:defaultCfg(),
   sel:new Set(),token:'',storeNote:'',watch:{cat:'leeches',type:'all',q:'',limit:40},lesson:null,quiz:null,loading:true,xq:'',xlimit:90,armed:false,vtab:'words',vq:'',vlimit:60,rd:null,hw:null};
-const ROUTES=['dashboard','watchlist','practice','extra-kanji','vocab','writing','stats','settings'];
+const ROUTES=['dashboard','watchlist','practice','extra-kanji','vocab','writing','library','stats','settings'];
 const NEEDS_DATA=['dashboard','watchlist','practice','stats'];
 
 /* ---------- derived numbers ---------- */
@@ -1000,7 +1075,7 @@ function demoBanner(){
 
 /* ---------- Dashboard ---------- */
 function viewDashboard(){
-  const D=S.D,st=computeStats(D),lp=levelProgress(D),c=D.cats,xs=xStats();
+  const D=S.D,st=computeStats(D),lp=levelProgress(D),c=D.cats;
   const practicable=c.leeches.items.filter(i=>i.ch).length;
   const kNeed=Math.ceil(lp.k.total*.9);
   const colr=t=>t==='r'?'var(--rad)':t==='k'?'var(--kan)':'var(--voc)';
@@ -1011,7 +1086,6 @@ function viewDashboard(){
   const srsBoxes=[1,2,3,4,5].map(g=>`<div class="srsbox s${g}"><b>${fmtN(groups[g])}</b><span>${GROUP_NAMES[g]}</span></div>`).join('');
   const top=c.leeches.items.slice(0,8);
   const chips=['critical','reading','meaning','stuck','almost','flawless'].map(id=>`<a class="chip" href="#watchlist" data-act="cat" data-cat="${id}">${esc(c[id].label)} · ${c[id].items.length}</a>`).join('');
-  const lessons=Math.min(S.cfg.batch,xs.pool.length);
   const facts=[
     D.noHistory?(()=>{const a=D.items.reduce((s,i)=>s+i.mc+i.mi+i.rc+i.ri,0),o=D.items.reduce((s,i)=>s+i.mc+i.rc,0);return[fmtN(a),'answers given, '+(pctOf(o,a)??0)+'% correct']})():[fmtN(st.rev),'reviews logged, '+(pctOf(st.ok,st.rev)??0)+'% fully correct'],
     [st.avg?st.avg.toFixed(1)+' days':'–','average time per level'+(st.fastest?`, fastest ${st.fastest.d.toFixed(1)} (level ${st.fastest.lv})`:'')],
@@ -1021,9 +1095,9 @@ function viewDashboard(){
     [String(st.burned),'items burned']
   ].map(f=>`<div class="fact"><b>${f[0]}</b><span>${esc(f[1])}</span></div>`).join('');
   return`${S.source==='sample'?demoBanner():''}
+  ${availNowCard(D)}
   <div class="bigs">
     <button class="big pink" data-act="practiceCat" data-cat="leeches"${practicable?'':' disabled'}><span><span class="bl">Leech practice</span><br><span class="bt">Fix what keeps slipping</span></span><span class="bn">${practicable}</span></button>
-    <button class="big blue" data-act="goExtra"><span><span class="bl">Extra kanji, not on WaniKani</span><br><span class="bt">${xs.due} reviews · ${lessons} lessons</span></span><span class="bn">${xs.due+lessons}</span></button>
   </div>
   <div class="grid">
     <section class="card"><header><h3>Level ${D.user.level}</h3><span class="sub">${lp.k.total?`${lp.k.passed} of ${lp.k.total} kanji at Guru. Level ${D.user.level+1} unlocks at ${kNeed}.`:''}</span></header>${lvBars}</section>
@@ -1215,6 +1289,7 @@ function viewStats(){
   const D=S.D,st=computeStats(D);
   return`${S.source==='sample'?demoBanner():''}
   <div class="sectionhead"><h2>Stats</h2>${rangeSeg()}</div>
+  ${itemTotalsCard(D)}
   <div class="grid g2">${levelTimeCard(D,st)}${levelAccCard(D)}</div>
   ${accuracyCharts(D,false)}
   <div class="grid g2">${D.noHistory?'':hourCard(D,st)}${forecastCard(D)}</div>
@@ -1279,14 +1354,15 @@ function startPractice(items){
 function viewWelcome(){
   const need='<span class="chip">Needs your WaniKani data</span>',free='<span class="chip ok">Works without connecting</span>';
   const feats=[
-    ['Dashboard',need,'Your level at a glance: how many kanji are at Guru and how many you need for the next level, how your items spread over the SRS stages, your most-missed items, and the highlights of your history. The level-up planner and the kanji coverage chart sit here too.'],
+    ['Dashboard',need,'An Available now card with the reviews and lessons waiting on WaniKani next to the ones waiting in Kani Plus, each clearly labelled. Then your level at a glance: how many kanji are at Guru and how many you need for the next level, how your items spread over the SRS stages, your most-missed items, and the highlights of your history. The level-up planner and the kanji coverage chart sit here too.'],
     ['Level-up planner',need,'Shows the earliest moment you could reach the next level, if you did every level-up-blocking item the second it opened and answered everything right. It also lists when each of those items opens, so you know when a review session actually speeds you up. You level up when 90% of the level\'s kanji are at Guru, and a kanji only unlocks once its radicals are at Guru, so the planner follows both. Press Refresh first, so it works from your latest reviews.'],
     ['Watchlist',need,'Eight lists of items worth a second look: leeches, critical condition, reading trouble, meaning trouble, stuck in Apprentice, close to burning, flawless, and burned the hard way. Every item says why it is on the list. Tap an item for its details and your history with it, or tick several to practice them together.'],
     ['Practice',need,'A WaniKani-style quiz on any watchlist, or on the items you ticked. Type meanings in English and readings in romaji, which turns into kana as you type. It never changes your WaniKani SRS, so it is a safe place to drill what keeps slipping.'],
     ['Extra Kanji',free,'WaniKani teaches about 2,000 kanji. This section teaches the common ones it leaves out, from the joyo, newspaper-frequency and JLPT lists, with lessons, reviews, built-in mnemonics and room for your own. It has its own review schedule and never touches WaniKani.'],
     ['Vocab &amp; Reading',free,'<b>Vocab:</b> JLPT words WaniKani does not teach, offered first from kanji you already know, each with a memory hook. <b>Reading:</b> short Japanese sentences chosen to fit the kanji you know. Hover a sentence (or tap it) for the English. Kanji you have not learned yet always show their reading; known kanji show it blurred until you hover. It gets sharper once you connect, because it can then see which kanji you know.'],
     ['Writing',free,'Learn to write the kanji WaniKani teaches, level by level. You trace each stroke, then write it from numbered start points with less help each round, then from memory. Later it comes back as reviews with WaniKani-like timings. It is a separate system from WaniKani.'],
-    ['Stats',need,'Days per level, accuracy per level and per day, the hours you review at, a forecast of upcoming reviews, and a coverage chart: how much of the joyo grades, JLPT levels and frequency bands you already know, from WaniKani and from Extra Kanji together.']
+    ['Library',free,'Every WaniKani kanji and then every Kani Plus kanji in one place, coloured by your SRS stage. Organise them by WaniKani level, joyo grade or frequency to see which kanji you know where. Tap one for readings, meaning, stroke order, the mnemonic and when it is next due. With your WaniKani data connected you can also list radicals and vocabulary when organised by level. Works without connecting, but the colours need your data.'],
+    ['Stats',need,'Item totals by type (radicals, kanji, vocabulary) for WaniKani and for Kani Plus, then days per level, accuracy per level and per day, the hours you review at, a forecast of upcoming reviews, and a coverage chart: how much of the joyo grades, JLPT levels and frequency bands you already know, from WaniKani and from Extra Kanji together.']
   ];
   const faq=[
     ['What does the token do, and is it safe?','A token is a password that lets Kani Plus read your WaniKani data. Make it with every permission box unticked and it can only read: it cannot do reviews, start lessons or change anything. It stays in this browser and is sent only to wanikani.com'+(SYNC_URL?', plus the sync server if you leave syncing on':'')+'. Do not save it on a shared computer.'],
@@ -1567,7 +1643,7 @@ function viewExtra(){
         ${srcBtn('joyo','Joyo','not on WaniKani')}${srcBtn('freq','Frequency','top 2,500, not on WaniKani')}${srcBtn('jlpt','JLPT',jl?jl+' only (WaniKani has the rest)':'not on WaniKani')}${srcBtn('name','Name kanji','used in names, rarer. Off by default')}</div>
       <div class="optrow"><span class="muted">Order</span><div class="seg" role="group" aria-label="Order">${[['freq','Most common first'],['grade','School grade first']].map(s=>`<button data-act="xorder" data-v="${s[0]}" aria-pressed="${S.cfg.order===s[0]}">${s[1]}</button>`).join('')}</div></div>
       <div class="optrow"><span class="muted">Lesson size</span><div class="seg" role="group" aria-label="Lesson size">${[3,5,10].map(n=>`<button data-act="xbatch" data-n="${n}" aria-pressed="${S.cfg.batch===n}">${n} kanji</button>`).join('')}</div></div>
-      <div class="optrow"><span class="muted">Review session</span><div class="seg" role="group" aria-label="Review session size">${[10,20,50].map(n=>`<button data-act="xrsize" data-n="${n}" aria-pressed="${S.cfg.rsize===n}">${n} per session</button>`).join('')}</div></div></section>
+      <p class="hint">Reviews run as one session with everything that is due. Press Stop whenever you like, every answer you gave is already saved.</p></section>
   </div>
   <section class="card"><header><h3>Every kanji in your selection</h3><span class="sub">Tap one for details, your mnemonic and its source lists. Colors follow Apprentice to Burned.</span></header>
     <div class="tools" style="margin-bottom:12px">
@@ -1634,10 +1710,10 @@ function startNewReviews(){
     const left=[];const tt=nowS();
     for(const ch in S.srs){const r=S.srs[ch],k=NEW_BY.get(ch);if(k&&!wkHas(ch)&&r.s<9&&r.n&&r.n<=tt)left.push(k)}
     if(!left.length){S.quiz=null;renderQuiz();render();return}
-    const batch=shuffle(left).slice(0,S.cfg.rsize);
+    const batch=shuffle(left);
     startQuiz({title:'Extra Kanji reviews',label:'Extra Kanji · Review',badge:'Not on WaniKani',badgeClass:'freq',items:batch.map(newQItem),
       onItem:(q,mistake)=>{S.srs[q.ch]=applySrs(S.srs[q.ch],mistake);persistLater('srs',()=>S.srs)},
-      next:()=>{const n=Object.keys(S.srs).filter(ch=>{const r=S.srs[ch];return NEW_BY.get(ch)&&!wkHas(ch)&&r.s<9&&r.n&&r.n<=nowS()}).length;return n?{label:'Review '+Math.min(n,S.cfg.rsize)+' more',fn:run}:null}});
+      next:()=>{const n=Object.keys(S.srs).filter(ch=>{const r=S.srs[ch];return NEW_BY.get(ch)&&!wkHas(ch)&&r.s<9&&r.n&&r.n<=nowS()}).length;return n?{label:'Review '+n+' more that came due',fn:run}:null}});
   };
   run();
 }
@@ -1649,22 +1725,9 @@ function startLessonQuiz(){
 }
 
 /* ---------- detail sheets ---------- */
-function openNew(ch){
-  const k=NEW_BY.get(ch);if(!k)return;const r=S.srs[ch];
-  const m=$('#modal');
-  const rec=r?((r.c+r.w?`${r.c} right, ${r.w} slips`:'')+(r.n&&r.s<9?((r.c+r.w?', n':'N')+'ext review '+(r.n<=nowS()?'now':'in '+inText(r.n))):'')):'';
-  m.innerHTML=`<div class="sheet" role="dialog" aria-modal="true" aria-label="Kanji details">
-    <div style="display:flex;gap:14px;align-items:center"><span class="tile t-k lg">${esc(k.ch)}</span><div style="min-width:0"><h3>${esc(k.m[0]||k.ch)}</h3><div class="muted" style="margin-top:2px">${r?esc(stageName(r.s)):'Not started'}</div></div></div>
-    <div class="tags" style="margin-top:12px">${tagsHtml(k)}</div>
-    <p class="why" style="margin-top:8px">${esc(whyHere(k))}</p>
-    <dl class="kv">${kanjiFacts(k).map(f=>`<dt>${f[0]}</dt><dd>${esc(f[1])}</dd>`).join('')}${rec?`<dt>Your record</dt><dd>${esc(rec)}</dd>`:''}</dl>
-    <p class="hint">${jishoLinks(k.ch)}</p>
-    <div style="margin-top:14px">${personalHtml('n'+k.ch,true)}</div>
-    <div class="tools" style="margin-top:16px;justify-content:flex-end">${!r?`<button class="btn" data-act="learnNow" data-ch="${esc(k.ch)}">Learn this now</button>`:''}${r&&r.s<9?`<button class="btn" data-act="resetKanji" data-ch="${esc(k.ch)}">Restart at Apprentice 1</button>`:''}${!r||r.s<5?`<button class="btn" data-act="knowKanji" data-ch="${esc(k.ch)}">I already know this</button>`:''}<button class="btn primary" data-act="closeModal">Close</button></div></div>`;
-  m.hidden=false;
-}
 function openItem(id){
   const it=S.D.by.get(+id);if(!it)return;
+  if(it.t==='k'&&it.ch)return openKanji(it.ch);
   const p=S.prac['w'+it.id];
   const link=it.t==='k'||it.t==='v'?`https://www.wanikani.com/${it.t==='k'?'kanji':'vocabulary'}/${encodeURIComponent(it.ch)}`:'';
   const rows=[['Type',TYN[it.t]],['Level',it.lv],['SRS stage',stageName(it.srs)],
@@ -1675,11 +1738,13 @@ function openItem(id){
   const m=$('#modal');
   m.innerHTML=`<div class="sheet" role="dialog" aria-modal="true" aria-label="Item details"><div style="display:flex;gap:14px;align-items:center">${tile(it,'lg')}<div style="min-width:0"><h3>${esc(it.nm.join(', '))}</h3><div class="rr">${esc(it.rd.join('、'))}</div></div></div>
     <dl class="kv">${rows.map(r=>`<dt>${r[0]}</dt><dd>${esc(r[1])}</dd>`).join('')}</dl>
+    <div id="wkmn" data-id="${it.id}" style="margin-top:12px">${wkMnBox(it)}</div>
     ${it.ch?`<div style="margin-top:14px">${personalHtml('w'+it.id,false)}</div>`:''}
     <div class="tools" style="margin-top:16px;justify-content:space-between"><span>${link?`<a href="${link}" target="_blank" rel="noopener">View on WaniKani</a>`:''}</span><span style="display:flex;gap:8px">${it.ch&&it.srs>=1?`<button class="btn" data-act="practiceOne" data-id="${it.id}">Practice this</button>`:''}<button class="btn primary" data-act="closeModal">Close</button></span></div></div>`;
   m.hidden=false;
+  ensureWkMn(it);
 }
-function closeModal(){const m=$('#modal');m.hidden=true;m.innerHTML='';if(S.route==='extra-kanji'||S.route==='watchlist')softRefreshList()}
+function closeModal(){const m=$('#modal');m.hidden=true;m.innerHTML='';if(S.route==='extra-kanji'||S.route==='watchlist')softRefreshList();else if(S.route==='library')libRefresh()}
 function softRefreshList(){const l=$('#xlist');if(l&&!S.lesson)l.innerHTML=xListHtml()}
 
 /* ---------- Vocab: JLPT words (mostly) not taught by WaniKani ---------- */
@@ -1813,7 +1878,7 @@ function viewVocab(){
       <div class="optrow"><span class="muted">Order</span><div class="seg" role="group" aria-label="Order">${[['ready','Kanji I know first'],['jlpt','JLPT level only']].map(s=>`<button data-act="vorder" data-v="${s[0]}" aria-pressed="${S.cfg.vorder===s[0]}">${s[1]}</button>`).join('')}</div></div>
       <div class="optrow"><span class="muted">Only words I can already read</span><div class="seg" role="group" aria-label="Only words made of known kanji">${[[true,'Yes'],[false,'No']].map(s=>`<button data-act="vready" data-v="${s[0]}" aria-pressed="${S.cfg.vready===s[0]}">${s[1]}</button>`).join('')}</div></div>
       <div class="optrow"><span class="muted">Lesson size</span><div class="seg" role="group" aria-label="Lesson size">${[3,5,10].map(n=>`<button data-act="vbatch" data-n="${n}" aria-pressed="${S.cfg.vbatch===n}">${n} words</button>`).join('')}</div></div>
-      <div class="optrow"><span class="muted">Review session</span><div class="seg" role="group" aria-label="Review session size">${[10,20,50].map(n=>`<button data-act="vrsize" data-n="${n}" aria-pressed="${S.cfg.vrsize===n}">${n} per session</button>`).join('')}</div></div></section>
+      <p class="hint">Reviews run as one session with every word that is due. Press Stop whenever you like, every answer you gave is already saved.</p></section>
   </div>
   <section class="card"><header><h3>Every word in your selection</h3><span class="sub">Tap a word for how it is built, its memory hook and your own notes.</span></header>
     <div class="tools" style="margin-bottom:12px">
@@ -1856,10 +1921,10 @@ function startVReviews(){
   const run=()=>{
     const left=vDue();
     if(!left.length){S.quiz=null;renderQuiz();render();return}
-    const batch=shuffle(left).slice(0,S.cfg.vrsize);
+    const batch=shuffle(left);
     startQuiz({title:'Vocab reviews',label:'Vocab · Review',badge:'JLPT vocab',badgeClass:'jlpt',items:batch.map(vQItem),
       onItem:(q,mistake)=>{S.srs[q.sk]=applySrs(S.srs[q.sk],mistake);persistLater('srs',()=>S.srs)},
-      next:()=>{const n=vDue().length;return n?{label:'Review '+Math.min(n,S.cfg.vrsize)+' more',fn:run}:null}});
+      next:()=>{const n=vDue().length;return n?{label:'Review '+n+' more that came due',fn:run}:null}});
   };
   run();
 }
@@ -1892,7 +1957,6 @@ document.addEventListener('click',e=>{
     case'vorder':setCfg('vorder',d.v);break;
     case'vready':setCfg('vready',d.v==='true');break;
     case'vbatch':setCfg('vbatch',+d.n);break;
-    case'vrsize':setCfg('vrsize',+d.n);break;
     case'vstatus':S.vlimit=60;setCfg('vstatus',d.v);break;
     case'startVLessons':startVLessons();break;
     case'startVReviews':startVReviews();break;
@@ -1961,13 +2025,19 @@ function rdTextHtml(){
   const R=S.rd,c=vctx(),hideUnk=!c.live&&!c.known.size;
   const sents=R.sents.map((s,i)=>`<span class="sent" data-i="${i}">${s.t.map(t=>rdTok(t,c,hideUnk)).join('')}</span><button type="button" class="trbtn" data-i="${i}" aria-label="Show the English translation" title="Show the English translation"><svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path d="M2.5 2.5h11a1 1 0 0 1 1 1v6.5a1 1 0 0 1-1 1H8l-3.2 2.7a.4.4 0 0 1-.65-.3V11h-1.65a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1z" fill="currentColor"/></svg><span>Translate</span></button>`);
   const kan=[...new Set(R.sents.flatMap(s=>s.t.flatMap(t=>[...tokBase(t)].filter(isKanjiCh))))];
-  const chips=kan.map(ch=>{const m=kanjiGloss(ch);const unk=!hideUnk&&!c.seen(ch);return`<span class="chip${unk?' unkchip':''}"><span class="jpc">${esc(ch)}</span> ${esc(m)}</span>`}).join('');
+  const chips=kan.map(ch=>{
+    const m=kanjiGloss(ch),st=kanjiState(ch),g=stateGroup(st),unk=!hideUnk&&!c.seen(ch);
+    if(st.kind==='none')return`<span class="chip${unk?' unkchip':''}"><span class="jpc">${esc(ch)}</span> ${esc(m)}</span>`;
+    const tip=m+' · '+(g?stageName(st.s):'Not started')+(st.next?' · '+(st.next<=nowS()?'due now':'next review in '+fmtIn(st.next-nowS())):'');
+    return`<button type="button" class="chip kchip k${g}${unk?' unkchip':''}" data-act="kanji" data-ch="${esc(ch)}" title="${esc(tip)}"><span class="jpc">${esc(ch)}</span> ${esc(m)}</button>`}).join('');
   const newN=hideUnk?0:kan.filter(k=>!c.seen(k)).length;
   return`<section class="card reader"><header><h3>${esc(R.title||(R.lv?'JLPT N'+R.lv+' sentences':'Sentences for you'))}</h3><span class="sub">${R.lv?'N'+R.lv+' practice':'Matched to your progress'}${hideUnk?'':' · '+(newN?newN+' kanji you have not started (dotted)':'every kanji is one you know')}</span></header>
     <div class="jp ${R.list?'jlist':''} fg-${S.cfg.rdFg}" id="jp">${R.list?sents.map(x=>`<div>${x}</div>`).join(''):`<p>${sents.join('')}</p>`}</div>
     <p class="hint rthint">${hideUnk?'Hover over a blurred word, or tap it, to see how it is read.':'Words with a kanji you have not learned yet always show their reading (dotted line). Hover over a blurred reading, or tap it, to see the others.'} Hover over (or tap) the <b>Translate</b> button after a sentence to see its English. Hovering a word only shows its reading.</p>
     <details style="margin-top:10px"><summary>Show the full translation</summary><div class="fulltr">${R.sents.map(s=>`<p>${esc(s.tr)}</p>`).join('')}</div></details>
-    <h4 class="subhead">Kanji in this text</h4><div class="tiles">${chips}</div></section>`;
+    <h4 class="subhead">Kanji in this text</h4><div class="tiles">${chips}</div>
+    <div class="legend" style="margin:10px 0 0">${[0,1,2,3,4,5].map(i=>legendBox(STAGE_COL[i],GROUP_NAMES[i])).join('')}</div>
+    <p class="hint" style="margin-top:4px">Colours show your stage for each kanji. Tap one for its stroke order, readings, mnemonic and when it is next due.</p></section>`;
 }
 function viewReader(){
   rdHideTr();
@@ -2040,7 +2110,7 @@ const HWL=(()=>{const a=Array.from({length:HWLV+1},()=>[]);for(const ch in KWd){
 const HW_ALL=[].concat(...HWL.slice(1));
 const hwMyLevel=()=>S.D&&S.source==='import'?S.D.user.level:0;
 const parseStrokes=s=>s.split(';').map(p=>{const n=p.split(',').map(Number),o=[];for(let i=0;i<n.length;i+=2)o.push([n[i],n[i+1]]);return o});
-const hwBatch=()=>S.cfg.hwBatch||5,hwThr=()=>S.cfg.hwThr||80,hwRsize=()=>S.cfg.hwRsize||10;
+const hwBatch=()=>S.cfg.hwBatch||5,hwThr=()=>S.cfg.hwThr||80;
 const hwSave=()=>persistLater('srs',()=>S.srs);
 
 /* geometry */
@@ -2125,7 +2195,7 @@ function viewWriting(){
     <p>Learn to write the kanji WaniKani teaches, level by level. A lesson gives you a few kanji at a time. First you copy each stroke. Then you write them from numbered start points, and every round shows fewer of them, until you can write each kanji once with no help at all.</p>
     <p>After that the kanji come back as reviews with the same timings as WaniKani. You see the meaning and reading and write it from memory. One wrong stroke counts as a mistake, but you always get to finish the kanji, and it goes back a step.</p>
     <p>A new level opens when ${hwThr()}% of the previous one has reached Guru. Too easy? Skip single kanji in a lesson, skip a whole level, or skip ahead below.</p></section>`;
-  const bl=[3,5,8],rl=[5,10,20],tl=[60,80,100];
+  const bl=[3,5,8],tl=[60,80,100];
   const free=hwFreeRange(),opts=n=>Array.from({length:60},(_,i)=>`<option value="${i+1}"${i+1===n?' selected':''}>${i+1}</option>`).join('');
   return`<div class="sectionhead"><h2>Writing</h2><span class="muted">${S.cfg.hwHideIntro?'<button class="linkbtn" data-act="hwShowIntro">How does this work?</button> · ':''}Write the kanji from WaniKani, level by level</span></div>${guestNote()}
   ${intro}
@@ -2139,7 +2209,6 @@ function viewWriting(){
       ${nextUp?`<h4 class="subhead">Next lessons</h4><div class="tiles">${nextUp}</div>`:''}</section>
     <section class="card"><header><h3>Settings</h3></header>
       <div class="optrow"><span class="muted">Lesson size</span><div class="seg" role="group" aria-label="Lesson size">${bl.map(n=>`<button data-act="hwset" data-k="hwBatch" data-n="${n}" aria-pressed="${hwBatch()===n}">${n} kanji</button>`).join('')}</div></div>
-      <div class="optrow"><span class="muted">Review session</span><div class="seg" role="group" aria-label="Review session size">${rl.map(n=>`<button data-act="hwset" data-k="hwRsize" data-n="${n}" aria-pressed="${hwRsize()===n}">${n} per session</button>`).join('')}</div></div>
       <div class="optrow"><span class="muted">Next level opens at</span><div class="seg" role="group" aria-label="Guru needed to open the next level">${tl.map(n=>`<button data-act="hwset" data-k="hwThr" data-n="${n}" aria-pressed="${hwThr()===n}">${n}% at Guru</button>`).join('')}</div></div>
       <p class="hint">Guru is the stage a kanji reaches after four correct reviews, about three and a half days after you learn it.</p></section>
   </div>
@@ -2200,7 +2269,7 @@ function hwGoLesson(){
 }
 function hwStartReviews(){
   const due=hwDueList();if(!due.length){toast('Nothing is due right now.');return}
-  const batch=shuffle(due).slice(0,hwRsize());
+  const batch=shuffle(due);
   S.hw={mode:'review',phase:'draw',items:[],q:batch.map(ch=>({ch})),cur:null,results:[],total:batch.length,doneN:0};
   hwNext();
 }
@@ -2279,7 +2348,7 @@ function hwRender(){
   const tools=c.done?`<button class="btn primary" data-act="hwNext" id="hwnext">${!H.q.length?'Finish':'Next'}</button>`
     :trace?`<button class="btn" data-act="hwDemo">Watch it</button><button class="btn" data-act="hwGiveUp">Show me</button>`
     :`<button class="btn" data-act="hwHint">Show next stroke</button>${rads&&!c.rad?'<button class="btn" data-act="hwRadShow">Show radicals</button>':''}<button class="btn" data-act="hwGiveUp">I don't know</button>`;
-  root.innerHTML=`<div class="qwrap"><div class="qtop"><button class="btn sm" data-act="hwQuit">Quit</button>${meterSeg([{v:pct,w:pct,c:'var(--good)'}])}<span class="num muted">${counter}</span></div>
+  root.innerHTML=`<div class="qwrap"><div class="qtop"><button class="btn sm" data-act="hwQuit" title="Stop here. Everything you wrote is already saved.">Stop</button>${meterSeg([{v:pct,w:pct,c:'var(--good)'}])}<span class="num muted">${counter}</span></div>
     <div class="qmeta"><span class="muted">${title} · WaniKani level ${d[0]}${c.it.retry?' · extra practice':''}</span><span class="tag name">Stroke ${Math.min(c.si+1,c.strokes.length)} of ${c.strokes.length}</span></div>
     ${chips}${banner}
     <div class="hwprompt"><div class="hwm">${esc(d[1]||'?')}</div><div class="hwr">${esc(d[2])}</div>${c.rad&&rads?`<div class="hwrad">Radicals: ${esc(rads)}</div>`:''}</div>
@@ -2301,7 +2370,7 @@ function hwSummaryHtml(root,H){
     const right=R.filter(r=>r.clean).length,wrong=R.filter(r=>!r.clean);
     facts=`<div class="fact"><b>${right} / ${R.length}</b><span>written correctly</span></div><div class="fact"><b>${R.length?Math.round(100*right/R.length):0}%</b><span>accuracy</span></div>`;
     body=wrong.length?`<section class="card"><header><h3>Went back a stage</h3></header><div class="rows">${wrong.map(r=>`<div class="row" style="cursor:default"><span class="tile t-k">${esc(r.ch)}</span><div class="rmain"><div class="rn">${esc(KWd[r.ch][1])}</div><div class="rr">${esc(KWd[r.ch][2])}</div><div class="why">${r.misses} wrong stroke${r.misses===1?'':'s'}${r.hints?', '+r.hints+' hint'+(r.hints===1?'':'s'):''}</div></div><div class="rside">${pillSrs(r.to)}</div></div>`).join('')}</div></section>`:'<section class="card"><p>Every kanji written correctly. Nothing went back.</p></section>';
-    const n=hwDueList().length;next=n?`<button class="btn primary" data-act="hwMoreReviews">Review ${Math.min(n,hwRsize())} more</button>`:'';
+    const n=hwDueList().length;next=n?`<button class="btn primary" data-act="hwMoreReviews">Review ${n} more that came due</button>`:'';
   }else{
     const clean=R.filter(r=>r.clean).length,rough=R.filter(r=>!r.clean);
     facts=`<div class="fact"><b>${clean} / ${R.length}</b><span>written without help or mistakes</span></div><div class="fact"><b>${R.reduce((a,r)=>a+r.misses,0)}</b><span>wrong strokes along the way</span></div>`;
@@ -2438,6 +2507,299 @@ document.addEventListener('click',e=>{
 document.addEventListener('change',e=>{
   if(e.target.id==='hwFrom'){S.cfg.hwFrom=+e.target.value;if(S.cfg.hwTo&&S.cfg.hwTo<S.cfg.hwFrom)S.cfg.hwTo=S.cfg.hwFrom;persistLater('cfg',()=>S.cfg);render()}
   if(e.target.id==='hwTo'){S.cfg.hwTo=+e.target.value;if(S.cfg.hwFrom>S.cfg.hwTo)S.cfg.hwFrom=S.cfg.hwTo;persistLater('cfg',()=>S.cfg);render()}
+});
+
+/* ---------- "Available now", the kanji detail popup, the Library page and the item totals ---------- */
+const WK_SITE='https://www.wanikani.com/';
+const plural=(n,one,many)=>fmtN(n)+' '+(n===1?one:many);
+const nextText=ts=>{const t=nowS();return ts<=t?'Due now':fmtWhen(ts)+', in '+fmtIn(ts-t)};
+
+/* WaniKani kanji by character, rebuilt only when the account data changes */
+let _kbD=null,_kb=null;
+function wkKanjiMap(){
+  if(_kbD!==S.D||!_kb){_kbD=S.D;_kb=new Map();if(S.D)for(const i of S.D.items)if(i.t==='k'&&i.ch)_kb.set(i.ch,i)}
+  return _kb;
+}
+/* Where a kanji stands: on WaniKani (with your stage when connected), taught here by Kani Plus, or in neither list */
+function kanjiState(ch){
+  const it=wkKanjiMap().get(ch);
+  if(it)return{kind:'wk',it,s:it.srs,next:it.srs>=1&&it.srs<9?it.next:null};
+  const k=NEW_BY.get(ch);
+  if(k&&!wkHas(ch)){const r=S.srs[ch];return{kind:'kp',k,s:r?r.s:null,next:r&&r.s<9?r.n:null}}
+  if(KWd[ch])return{kind:'wk',it:null,s:null,next:null};
+  return{kind:'none',s:null,next:null};
+}
+const stateGroup=st=>st.s!=null&&st.s>=1?stageGroup(st.s):0;
+const STAGE_COL=['var(--lock)','var(--app)','var(--guru)','var(--mas)','var(--enl)','var(--bur)'];
+
+/* ---------- "Available now": WaniKani and Kani Plus side by side ---------- */
+function availAgo(){
+  if(S.source==='sample')return'Demo data';
+  if(!S.importedAt)return'';
+  const m=Math.max(0,Math.round((nowS()-S.importedAt)/60));
+  return'WaniKani numbers from '+(m<2?'just now':m<90?m+' minutes ago':Math.round(m/60)+' hours ago')+'. Press Refresh to update.';
+}
+function availNowCard(D){
+  const t=nowS(),xs=xStats(),vs=vStats(),hs=hwStats();
+  const rc={r:0,k:0,v:0},lc={r:0,k:0,v:0};let wl=0,wr=0,nextAt=null;
+  for(const i of D.items){
+    if(i.srs===0){wl++;lc[i.t]++}
+    else if(i.srs>=1&&i.srs<=8&&i.next){if(i.next<=t){wr++;rc[i.t]++}else if(nextAt==null||i.next<nextAt)nextAt=i.next}
+  }
+  const split=c=>`${plural(c.r,'radical','radicals')} · ${plural(c.k,'kanji','kanji')} · ${plural(c.v,'word','words')}`;
+  const wkUrl=WK_SITE+'dashboard';
+  const wk=`<div class="avp wk">
+    <div class="avh"><span class="avbadge wk">WaniKani</span><span class="muted">Your account. Do these on wanikani.com</span></div>
+    <div class="avnums">
+      <a class="avnum" href="${wkUrl}" target="_blank" rel="noopener"><b>${fmtN(wr)}</b><span>Reviews</span></a>
+      <a class="avnum" href="${wkUrl}" target="_blank" rel="noopener"><b>${fmtN(wl)}</b><span>Lessons</span></a>
+    </div>
+    <p class="muted avsub">${wr?'Reviews: '+esc(split(rc))+'.':'No reviews waiting.'}${wl?' Lessons: '+esc(split(lc))+'.':''}</p>
+    <p class="muted avsub">${nextAt?(wr?'After these, the next review is in ':'Next review in ')+esc(fmtIn(nextAt-t))+' ('+esc(fmtWhen(nextAt))+').':''}</p></div>`;
+  const rows=[
+    {name:'Extra Kanji',sub:'Kanji WaniKani does not teach',due:xs.due,les:Math.min(S.cfg.batch,xs.pool.length),rev:'startReviews',lsn:'startLessons',href:'extra-kanji'},
+    {name:'Vocab',sub:'JLPT words',due:vs.due,les:Math.min(S.cfg.vbatch,vPool().length),rev:'startVReviews',lsn:'startVLessons',href:'vocab'},
+    {name:'Writing',sub:'Write kanji by hand',due:hs.due,les:Math.min(hwBatch(),hwPool().length),rev:'hwReviews',lsn:'hwLessons',href:'writing'}];
+  const kp=`<div class="avp kp">
+    <div class="avh"><span class="avbadge kp">Kani Plus</span><span class="muted">Done here, with its own schedule</span></div>
+    <div class="avrow avhead"><span></span><span>Reviews</span><span>Lessons</span></div>
+    ${rows.map(r=>`<div class="avrow"><a class="avname" href="#${r.href}"><b>${r.name}</b><small>${r.sub}</small></a>
+      <button class="avnum sm" data-act="${r.rev}"${r.due?'':' disabled'} aria-label="${r.name} reviews">${fmtN(r.due)}</button>
+      <button class="avnum sm" data-act="${r.lsn}"${r.les?'':' disabled'} aria-label="${r.name} lessons">${fmtN(r.les)}</button></div>`).join('')}
+    <p class="muted avsub">Tap a number to start. A review session holds everything that is due and you can stop any time. Lessons come in batches you can set on each page.</p></div>`;
+  return`<section class="card avail"><header><h3>Available now</h3><span class="sub">${esc(availAgo())}</span></header><div class="availgrid">${wk}${kp}</div></section>`;
+}
+
+/* ---------- item totals by type ---------- */
+function itemTotalsCard(D){
+  const row=(label,total,started,guru,burned,cls)=>`<tr${cls?` class="${cls}"`:''}><th scope="row">${label}</th><td>${fmtN(total)}</td><td>${fmtN(started)}</td><td>${fmtN(guru)}</td><td>${fmtN(burned)}</td></tr>`;
+  const wkRows=TY.map(ty=>{
+    const l=D.items.filter(i=>i.t===ty);
+    return[`<i class="dot" style="background:var(--${ty==='r'?'rad':ty==='k'?'kan':'voc'})"></i>${ty==='r'?'Radicals':ty==='k'?'Kanji':'Vocabulary'}`,l.length,l.filter(i=>i.srs>=1).length,l.filter(i=>i.srs>=5).length,l.filter(i=>i.srs===9).length];
+  });
+  const sum=i=>wkRows.reduce((a,r)=>a+r[i],0);
+  const xs=xStats(),vs=vStats(),hs=hwStats();
+  const c=vctx(),vTotal=VW.filter(v=>!(c.wkv&&c.wkv.has(v.w))).length;
+  const gu=g=>g.slice(2).reduce((a,b)=>a+b,0);
+  return`<section class="card"><header><h3>Item totals</h3><span class="sub">Everything, by type. Started means at least Apprentice 1.</span></header>
+    <div class="tbl tot"><table><thead><tr><th>WaniKani</th><th>Total</th><th>Started</th><th>Guru+</th><th>Burned</th></tr></thead><tbody>
+    ${wkRows.map(r=>row(r[0],r[1],r[2],r[3],r[4])).join('')}${row('All WaniKani items',sum(1),sum(2),sum(3),sum(4),'sum')}
+    </tbody><thead><tr><th>Kani Plus</th><th>Total</th><th>Started</th><th>Guru+</th><th>Burned</th></tr></thead><tbody>
+    ${row('Extra kanji',xs.total,xs.started,gu(xs.groups),xs.burned)}${row('Vocab words',vTotal,vs.started,gu(vs.groups),vs.burned)}${row('Kanji written',HW_ALL.length,hs.started,gu(hs.g),hs.burned)}
+    </tbody></table></div></section>`;
+}
+
+/* ---------- stroke order, drawn from the same stroke data the Writing page uses ---------- */
+function strokeD(p){
+  let d='M'+p[0][0]+' '+p[0][1];
+  if(p.length===2)return d+'L'+p[1][0]+' '+p[1][1];
+  for(let i=1;i<p.length-1;i++)d+='Q'+p[i][0]+' '+p[i][1]+' '+((p[i][0]+p[i+1][0])/2)+' '+((p[i][1]+p[i+1][1])/2);
+  const l=p[p.length-1];return d+'L'+l[0]+' '+l[1];
+}
+const SO_GUIDE='<path class="gd" d="M54.5 0V109M0 54.5H109"/>';
+function soAnimInner(ch){
+  const st=parseStrokes(KWd[ch][4]);
+  return SO_GUIDE+st.map((p,i)=>`<path class="st" pathLength="1" d="${strokeD(p)}" style="animation-delay:${(i*.7).toFixed(2)}s"/>`).join('');
+}
+function strokeOrderHtml(ch){
+  const d=KWd[ch];
+  if(!d||!d[4])return'';
+  const st=parseStrokes(d[4]),n=st.length;
+  const cell=i=>`<svg class="so" viewBox="0 0 109 109" role="img" aria-label="Stroke ${i+1} of ${n}">${SO_GUIDE}${st.slice(0,i).map(p=>`<path class="old" d="${strokeD(p)}"/>`).join('')}<path class="new" d="${strokeD(st[i])}"/><circle class="dt" cx="${st[i][0][0]}" cy="${st[i][0][1]}" r="4.6"/><text x="4" y="14">${i+1}</text></svg>`;
+  return`<h4 class="subhead">Stroke order · ${n} stroke${n===1?'':'s'}</h4>
+    <div class="soanimrow"><svg class="so soanim" id="soAnim" data-ch="${esc(ch)}" viewBox="0 0 109 109" role="img" aria-label="Animated stroke order">${soAnimInner(ch)}</svg>
+      <div><button class="btn sm" data-act="soReplay">Replay</button><p class="hint" style="margin-top:8px">The blue dot marks where each stroke starts.</p></div></div>
+    <div class="sosteps">${st.map((_,i)=>cell(i)).join('')}</div>`;
+}
+
+/* ---------- WaniKani's own mnemonics, fetched with your own token when you open an item ---------- */
+const WKMN={};
+const wkMarkup=s=>esc(s).replace(/&lt;(\/?)(radical|kanji|vocabulary|reading|meaning|ja)&gt;/g,(m,c)=>c?'</b>':'<b>').replace(/&lt;\/?[a-z]+&gt;/gi,'');
+function wkMnBox(it){
+  const c=WKMN[it.id],path=it.t==='r'?'radicals':it.t==='k'?'kanji':'vocabulary';
+  const link=WK_SITE+path+'/'+encodeURIComponent(it.ch||(it.nm[0]||'').toLowerCase());
+  if(c&&typeof c==='object'){
+    const blk=(h,m,hint)=>m?`<div class="builtin"><b>${h}</b><p>${wkMarkup(m)}</p>${hint?`<p class="hint">${wkMarkup(hint)}</p>`:''}</div>`:'';
+    return blk('Meaning mnemonic from WaniKani',c.m,c.mh)+blk('Reading mnemonic from WaniKani',c.r,c.rh);
+  }
+  if(c==='err'||!S.token||S.source!=='import')return`<p class="hint">WaniKani's own mnemonic is on <a href="${link}" target="_blank" rel="noopener">its page on WaniKani</a>.</p>`;
+  return`<p class="hint">Loading WaniKani's mnemonic…</p>`;
+}
+function ensureWkMn(it){
+  if(!it||WKMN[it.id]||!S.token||S.source!=='import')return;
+  WKMN[it.id]='load';
+  wkGet(WK_BASE+'subjects/'+it.id,S.token)
+    .then(d=>{const x=d.data;WKMN[it.id]={m:x.meaning_mnemonic||'',mh:x.meaning_hint||'',r:x.reading_mnemonic||'',rh:x.reading_hint||''}})
+    .catch(()=>{WKMN[it.id]='err'})
+    .then(()=>{const b=$('#wkmn');if(b&&+b.dataset.id===it.id)b.innerHTML=wkMnBox(it)});
+}
+
+/* ---------- one popup for every kanji: WaniKani's or Kani Plus's ---------- */
+const listTags=a=>{
+  if(!a)return'';const t=[];
+  if([1,2,3,4,5,6].includes(a.gr))t.push(['joyo','Joyo · grade '+a.gr]);else if(a.gr===8)t.push(['joyo','Joyo · secondary school']);
+  if(a.fq)t.push(['freq','Frequency #'+fmtN(a.fq)]);
+  if(a.jl)t.push(['jlpt','JLPT N'+a.jl]);
+  return t.map(x=>`<span class="tag ${x[0]}">${esc(x[1])}</span>`).join('');
+};
+function openKanji(ch){
+  const st=kanjiState(ch);if(st.kind==='none')return;
+  const wk=st.kind==='wk',it=st.it,k=st.k,d=KWd[ch],r=wk?null:S.srs[ch],m=$('#modal');
+  const meanings=wk?(it?it.nm:[d[1]]):k.m;
+  const readings=wk?(it&&it.rd.length?it.rd:[d[2]]):[...k.on,...k.kun.map(cleanReading)];
+  const rows=[];
+  if(wk){
+    rows.push(['WaniKani stage',it?stageName(it.srs):'Connect WaniKani to see this']);
+    if(it)rows.push(['Next review',it.srs>=1&&it.srs<9&&it.next?nextText(it.next):it.srs===0?'Lesson available, not started yet':it.srs===-1?'Locked until you reach level '+it.lv:it.srs===9?'Burned, no more reviews':'–']);
+    const h=S.srs['h'+ch];
+    if(h)rows.push(['Writing (Kani Plus)',stageName(h.s)+(h.s<9&&h.n?', next review '+nextText(h.n):'')]);
+    if(it){
+      rows.push(['Meaning record',it.mt?`${it.mc} right, ${it.mi} wrong (streak ${it.mcs})`:'–'],['Reading record',it.rt?`${it.rc} right, ${it.ri} wrong (streak ${it.rcs})`:'–']);
+      if(it.inc)rows.push(['Leech score',it.leech.toFixed(2)]);
+    }
+    if(d&&d[3])rows.push(['Radicals',d[3].split(',').join(', ')]);
+    rows.push(['Strokes',d&&d[4]?String(parseStrokes(d[4]).length):'–']);
+  }else{
+    rows.push(['Kani Plus stage',r?stageName(r.s):'Not started'],['Next review',r&&r.s<9&&r.n?nextText(r.n):r?'Burned, no more reviews':'–']);
+    if(r&&(r.c||r.w))rows.push(['Your record',`${r.c} right, ${r.w} slips`]);
+    rows.push(["On'yomi",k.on.join('、')||'–'],["Kun'yomi",k.kun.map(cleanReading).join('、')||'–'],['Strokes',k.st||'–']);
+  }
+  const tags=wk?`<span class="tag wk">WaniKani level ${it?it.lv:d[0]}</span>${listTags(AKM.get(ch))}`:tagsHtml(k);
+  const mn=wk
+    ?(it?`<div id="wkmn" data-id="${it.id}">${wkMnBox(it)}</div><div style="margin-top:14px">${personalHtml('w'+it.id,false)}</div>`
+        :`<p class="hint">Connect WaniKani in Settings to see WaniKani's own mnemonic and write your own. Until then it is <a href="${WK_SITE}kanji/${encodeURIComponent(ch)}" target="_blank" rel="noopener">on its WaniKani page</a>.</p>`)
+    :`<div style="margin-top:14px">${personalHtml('n'+ch,true)}</div>`;
+  const stroke=wk?strokeOrderHtml(ch):`<h4 class="subhead">Stroke order</h4><p class="hint">${k.st?k.st+' strokes. ':''}No diagram is stored for this kanji. ${jishoLinks(ch)}</p>`;
+  const links=wk?`<a href="${WK_SITE}kanji/${encodeURIComponent(ch)}" target="_blank" rel="noopener">View on WaniKani</a> · ${jishoLinks(ch)}`:jishoLinks(ch);
+  const acts=wk
+    ?(it&&it.srs>=1?`<button class="btn" data-act="practiceOne" data-id="${it.id}">Practice this</button>`:'')
+    :`${!r?`<button class="btn" data-act="learnNow" data-ch="${esc(ch)}">Learn this now</button>`:''}${r&&r.s<9?`<button class="btn" data-act="resetKanji" data-ch="${esc(ch)}">Restart at Apprentice 1</button>`:''}${!r||r.s<5?`<button class="btn" data-act="knowKanji" data-ch="${esc(ch)}">I already know this</button>`:''}`;
+  const g=stateGroup(st);
+  m.innerHTML=`<div class="sheet kdetail" role="dialog" aria-modal="true" aria-label="Kanji details">
+    <div style="display:flex;gap:14px;align-items:center"><span class="tile lg ${wk?'t-k':'t-k'} ksrs k${g}">${esc(ch)}</span><div style="min-width:0"><h3>${esc(meanings.slice(0,4).join(', '))}</h3><div class="muted" style="margin-top:2px">${esc(readings.slice(0,6).join('、'))}</div>
+      <div style="margin-top:6px"><span class="pill s${g}">${esc(st.s!=null&&st.s>=0?(st.s===0?'Lesson':stageName(st.s)):st.s===-1?'Locked':'Not started')}</span> <span class="tag ${wk?'wk':'freq'}">${wk?'On WaniKani':'Kani Plus'}</span></div></div></div>
+    <div class="tags" style="margin-top:12px">${tags}</div>
+    ${wk?'':`<p class="why" style="margin-top:8px">${esc(whyHere(k))}</p>`}
+    <dl class="kv">${rows.map(x=>`<dt>${x[0]}</dt><dd>${esc(x[1])}</dd>`).join('')}</dl>
+    ${stroke}
+    <h4 class="subhead">Mnemonic</h4>${mn}
+    <p class="hint" style="margin-top:12px">${links}</p>
+    <div class="tools" style="margin-top:16px;justify-content:flex-end">${acts}<button class="btn primary" data-act="closeModal">Close</button></div></div>`;
+  m.hidden=false;
+  const sh=m.firstElementChild;if(sh)sh.scrollTop=0;
+  if(it)ensureWkMn(it);
+}
+const openNew=openKanji;
+
+/* ---------- Library: every kanji, organised so you can see what you know where ---------- */
+const LIB_JOYO=[1,2,3,4,5,6,8];
+function libEntries(){
+  const out=[],seen=new Set(),map=wkKanjiMap();
+  const add=(src,o)=>{o.src=src;o.g=o.s!=null&&o.s>=1?stageGroup(o.s):0;o.locked=o.s===-1;out.push(o)};
+  for(const [ch,it] of map){seen.add(ch);add('wk',{ty:'k',ch,it,lv:it.lv,s:it.srs,m:it.nm.join(', '),rd:it.rd.join('、')})}
+  for(const ch in KWd){if(seen.has(ch))continue;seen.add(ch);const d=KWd[ch];add('wk',{ty:'k',ch,it:null,lv:d[0],s:null,m:d[1],rd:d[2]})}
+  for(const k of visibleNew()){const r=S.srs[k.ch];add('kp',{ty:'k',ch:k.ch,k,s:r?r.s:null,m:k.m.join(', '),rd:[...k.on,...k.kun.map(cleanReading)].join('、')})}
+  for(const e of out){
+    const a=AKM.get(e.ch);
+    e.gr=e.src==='kp'?(e.k.joyo?e.k.gr:0):(a&&LIB_JOYO.includes(a.gr)?a.gr:0);
+    e.fq=e.src==='kp'?e.k.fq:(a?a.fq:0);
+  }
+  return out;
+}
+function libOthers(){
+  const out=[];if(!S.D)return out;
+  for(const it of S.D.items){
+    if(it.t==='k')continue;
+    const s=it.srs;
+    out.push({src:'wk',ty:it.t,ch:it.ch,it,lv:it.lv,s,m:it.nm.join(', '),rd:it.rd.join('、'),g:s>=1?stageGroup(s):0,locked:s===-1});
+  }
+  return out;
+}
+const byRank=(a,b)=>((a.fq||9999)-(b.fq||9999))||a.ch.localeCompare(b.ch);
+function libGroups(){
+  const mode=S.cfg.lsort,all=libEntries().filter(e=>S.cfg.lsrc==='all'||e.src===(S.cfg.lsrc==='kp'?'kp':'wk'));
+  const groups=[];
+  const mk=(key,title,sub)=>{const g={key,title,sub,wk:[],kp:[],rad:[],voc:[]};groups.push(g);return g};
+  if(mode==='level'){
+    const byLv=new Map();
+    const lvOf=lv=>{if(!byLv.has(lv))byLv.set(lv,mk('l'+lv,'WaniKani level '+lv,''));return byLv.get(lv)};
+    const wkAll=all.filter(e=>e.src==='wk').sort(byRank);
+    for(let lv=1;lv<=60;lv++){const l=wkAll.filter(e=>e.lv===lv);if(l.length)lvOf(lv).wk=l}
+    if(S.cfg.lvr)for(const e of libOthers()){if(S.cfg.lsrc==='kp')break;const g=byLv.get(e.lv)||lvOf(e.lv);(e.ty==='r'?g.rad:g.voc).push(e)}
+    groups.sort((a,b)=>+a.key.slice(1)-+b.key.slice(1));
+    const kp=all.filter(e=>e.src==='kp').sort(byRank);
+    if(kp.length){const g=mk('kp','Not on WaniKani','Kani Plus kanji, most used first');g.kp=kp}
+  }else{
+    const bucket=e=>{
+      if(mode==='grade')return e.gr?[e.gr===8?7:e.gr,e.gr===8?'Secondary school (grade 8)':'Grade '+e.gr]:[9,'Not in the Joyo list'];
+      return e.fq?[Math.ceil(e.fq/250),'Frequency '+fmtN((Math.ceil(e.fq/250)-1)*250+1)+' to '+fmtN(Math.ceil(e.fq/250)*250)]:[99,'Outside the 2,500 most used'];
+    };
+    const map=new Map();
+    for(const e of all.slice().sort(byRank)){const [o,t]=bucket(e);if(!map.has(o))map.set(o,mk('b'+o,t,''));(e.src==='kp'?map.get(o).kp:map.get(o).wk).push(e)}
+    groups.sort((a,b)=>+a.key.slice(1)-+b.key.slice(1));
+  }
+  return groups;
+}
+function libMatch(e){
+  const st=S.cfg.lstat,q=(S.lq||'').trim().toLowerCase();
+  if(st==='new'&&e.g!==0)return false;
+  if(st==='learning'&&!(e.g===1))return false;
+  if(st==='known'&&!(e.g>=2))return false;
+  return !q||(e.ch||'').includes(q)||e.m.toLowerCase().includes(q)||e.rd.includes(q);
+}
+function libTile(e){
+  const label=e.ch||(e.m.split(',')[0]||'?'),title=[e.m,e.rd,e.g?stageName(e.s):e.locked?'Locked':e.s===0?'Lesson available':'Not started'].filter(Boolean).join(' · ');
+  const act=e.ty==='k'?`data-act="kanji" data-ch="${esc(e.ch)}"`:`data-act="open" data-id="${e.it.id}"`;
+  return`<button class="tile k${e.g}${e.locked?' lock':''}${e.ch?'':' tn'}" ${act} title="${esc(title)}">${esc(label)}</button>`;
+}
+function libListHtml(){
+  const groups=libGroups(),sections=[];
+  const stat=l=>{const c=[0,0,0,0,0,0];for(const e of l)c[e.g]++;return c};
+  for(const g of groups){
+    const kan=g.wk.concat(g.kp),c=stat(kan);
+    const show={rad:g.rad.filter(libMatch),wk:g.wk.filter(libMatch),kp:g.kp.filter(libMatch),voc:g.voc.filter(libMatch)};
+    const parts=Object.keys(show).filter(x=>show[x].length);if(!parts.length)continue;
+    const label={rad:'Radicals',wk:'WaniKani kanji',kp:'Kani Plus kanji',voc:'Vocabulary'};
+    const body=['rad','wk','kp','voc'].filter(x=>show[x].length).map(x=>`${parts.length>1?`<h5 class="lsub">${label[x]} · ${fmtN(show[x].length)}</h5>`:''}<div class="kgrid${x==='rad'||x==='voc'?' wide':''}">${show[x].map(libTile).join('')}</div>`).join('');
+    const known=c[2]+c[3]+c[4]+c[5],tot=kan.length;
+    const meter=tot?meterSeg([1,2,3,4,5].map(i=>({v:c[i],w:100*c[i]/tot,c:STAGE_COL[i]}))):'';
+    sections.push(`<details class="lgroup" open><summary><span class="lgt"><b>${esc(g.title)}</b>${g.sub?`<span class="muted"> · ${esc(g.sub)}</span>`:''}</span><span class="lgm">${meter}<span class="num muted">${tot?`${fmtN(known)} / ${fmtN(tot)} at Guru+`:''}</span></span></summary>${body}</details>`);
+  }
+  return sections.join('')||'<p class="muted" style="padding:10px 2px">Nothing matches.</p>';
+}
+function libRefresh(){const l=$('#liblist');if(l)l.innerHTML=libListHtml()}
+function viewLibrary(){
+  const wkN=Object.keys(KWd).length+(S.D?[...wkKanjiMap().keys()].filter(ch=>!KWd[ch]).length:0),kpN=visibleNew().length,lvl=S.cfg.lsort==='level',conn=!!S.D;
+  const seg=(act,cur,opts,label)=>`<div class="seg" role="group" aria-label="${label}">${opts.map(o=>`<button data-act="${act}" data-v="${o[0]}" aria-pressed="${cur===o[0]}">${o[1]}</button>`).join('')}</div>`;
+  const vrDis=!lvl||!conn;
+  return`<div class="sectionhead"><h2>Library</h2><span class="muted">${fmtN(wkN)} WaniKani kanji · ${fmtN(kpN)} Kani Plus kanji</span></div>
+  <section class="card">
+    <p class="muted" style="margin-bottom:6px">Every kanji, coloured by your stage. Tap one for readings, meaning, stroke order, mnemonic and when it is next due.${conn?'':' <a href="#settings">Connect WaniKani</a> to see your own stages on the WaniKani kanji.'}</p>
+    <div class="legend" style="margin:8px 0 2px">${[0,1,2,3,4,5].map(i=>legendBox(STAGE_COL[i],GROUP_NAMES[i])).join('')}<span class="faint">Dim tiles are locked on WaniKani</span></div>
+    <div class="optrow"><span class="muted">Organise by</span>${seg('lsort',S.cfg.lsort,[['level','WaniKani level'],['grade','Joyo grade'],['freq','Frequency']],'Organise by')}</div>
+    <div class="optrow"><span class="muted">Show</span>${seg('lsrc',S.cfg.lsrc,[['all','Everything'],['wk','WaniKani'],['kp','Kani Plus']],'Show')}${seg('lstat',S.cfg.lstat,[['all','Any stage'],['new','Not started'],['learning','Apprentice'],['known','Guru and up']],'Stage')}</div>
+    <div class="optrow"><span class="muted">Also list</span><div class="seg" role="group" aria-label="Also list radicals and vocabulary">${[[false,'Kanji only'],[true,'Radicals and vocabulary']].map(o=>`<button data-act="lvr" data-v="${o[0]}" aria-pressed="${!!S.cfg.lvr===o[0]}"${vrDis?' disabled':''}>${o[1]}</button>`).join('')}</div>
+      ${vrDis?`<span class="faint">${!conn?'Connect WaniKani to list radicals and vocabulary.':'Only when organised by WaniKani level, because radicals and vocabulary are not in the Joyo list.'}</span>`:''}</div>
+    <div class="optrow"><input type="search" class="field" id="lq" placeholder="Search kanji, meaning or reading" value="${esc(S.lq||'')}" aria-label="Search the library" style="flex:1 1 220px"></div>
+  </section>
+  <div id="liblist">${libListHtml()}</div>`;
+}
+
+/* ---------- events ---------- */
+document.addEventListener('click',e=>{
+  const el=e.target.closest('[data-act]');if(!el)return;
+  const d=el.dataset;
+  switch(d.act){
+    case'kanji':openKanji(d.ch);break;
+    case'lsort':setCfg('lsort',d.v);break;
+    case'lsrc':setCfg('lsrc',d.v);break;
+    case'lstat':setCfg('lstat',d.v);break;
+    case'lvr':if(!el.disabled)setCfg('lvr',d.v==='true');break;
+    case'soReplay':{const s=$('#soAnim');if(s)s.innerHTML=soAnimInner(s.dataset.ch);break}
+  }
+});
+document.addEventListener('input',e=>{
+  if(e.target.id==='lq'){S.lq=e.target.value;clearTimeout(S._lq);S._lq=setTimeout(libRefresh,150)}
 });
 
 /* ---------- optional cross-device sync (needs the sync server URL set at the top of the page) ---------- */
@@ -2581,7 +2943,7 @@ function renderQuiz(){
     fb=`<div class="qfb"><b class="${last.r?'okt':'bad'}">${verdict}</b><div class="muted" style="margin-top:4px">${info}</div>${last.r?'':'<div class="faint" style="margin-top:4px">You will see this one again shortly.</div>'}${syn}${note?`<div style="margin-top:10px">${mnemHtml(it.key,!!it.extra,2)}</div>`:''}</div>`;
   }
   const hint=q.k==='reading'&&it.on?` <span class="faint">on'yomi or kun'yomi</span>`:'';
-  root.innerHTML=`<div class="qwrap"><div class="qtop"><button class="btn sm" data-act="quitQuiz">Quit</button>${meterSeg([{v:Q.done,w:100*Q.done/Q.total,c:'var(--good)'}])}<span class="num muted">${Q.done}/${Q.total}</span></div>
+  root.innerHTML=`<div class="qwrap"><div class="qtop"><button class="btn sm" data-act="quitQuiz" title="Stop here. Everything you answered is already saved.">Stop</button>${meterSeg([{v:Q.done,w:100*Q.done/Q.total,c:'var(--good)'}])}<span class="num muted">${Q.done}/${Q.total}</span></div>
     <div class="qmeta"><span class="muted">${esc(Q.cfg.label)}</span><span class="tag ${Q.cfg.badgeClass||'name'}">${esc(Q.cfg.badge||'')}</span></div>
     <div class="qcard t-${it.t}"><div class="qchar">${esc(it.ch)}</div></div>
     <div class="qprompt">${TYN[it.t]} <b>${label}</b>${hint}</div>
@@ -2656,7 +3018,7 @@ function render(){
   if(S.loading){app.innerHTML='<section class="card"><p class="muted">Loading…</p></section>';return}
   let html;
   if(NEEDS_DATA.includes(S.route)&&!S.D)html=viewWelcome();
-  else html={dashboard:viewDashboard,watchlist:viewWatch,practice:viewPractice,'extra-kanji':viewExtra,vocab:viewVocab,writing:viewWriting,stats:viewStats,settings:viewSettings}[S.route]();
+  else html={dashboard:viewDashboard,watchlist:viewWatch,practice:viewPractice,'extra-kanji':viewExtra,vocab:viewVocab,writing:viewWriting,library:viewLibrary,stats:viewStats,settings:viewSettings}[S.route]();
   app.innerHTML=html;
 }
 function setRoute(h){
@@ -2727,7 +3089,6 @@ document.addEventListener('click',e=>{
     case'xsrc':{const s=S.cfg.src,on=Object.values(s).filter(Boolean).length;if(s[d.k]&&on===1){toast('Keep at least one list selected.');break}s[d.k]=!s[d.k];setCfg('src',s);break}
     case'xorder':S.xlimit=90;setCfg('order',d.v);break;
     case'xbatch':setCfg('batch',+d.n);break;
-    case'xrsize':setCfg('rsize',+d.n);break;
     case'xview':setCfg('view',d.v);break;
     case'xstatus':S.xlimit=90;setCfg('status',d.v);break;
     case'xmore':S.xlimit+=90;softRefreshList();break;
