@@ -518,6 +518,7 @@ button.chip.kchip{font-family:inherit;cursor:pointer;color:var(--ink)}
 .lvbtns{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;align-items:center}
 
 @media(max-width:560px){.lvrow.confirming{grid-template-columns:minmax(0,1fr)}.lvrow.confirming .lvbtns{justify-content:flex-start;order:2}.lvrow.confirming .lvmid{order:3}}
+#wlib{scroll-margin-top:136px}
 
 </style>
 </head>
@@ -2302,7 +2303,6 @@ function hwStats(){
 
 /* ---------- the Writing page ---------- */
 function viewWriting(){
-  if(S.wtab==='library')return`<div class="sectionhead"><h2>Writing</h2><span class="muted">Every kanji by level, with its stage and next review</span></div>${guestNote()}${hwTabs()}${viewWritingLibrary()}`;
   const levels=hwLevels(),pool=hwPool(levels),batch=Math.min(hwBatch(),pool.length),st=hwStats(),my=hwMyLevel();
   const firstLocked=levels.find(l=>!l.open),lockNote=firstLocked?(()=>{const p=levels[firstLocked.lv-2];return p?`Level ${firstLocked.lv} opens when ${Math.max(0,p.need-p.guru)} more level ${p.lv} kanji reach Guru.`:''})():'';
   const lessonSub=batch?'Learn '+batch+' new kanji':(lockNote||'Every kanji is started');
@@ -2315,8 +2315,7 @@ function viewWriting(){
     <p>A new level opens when ${hwThr()}% of the previous one has reached Guru. Too easy? Skip single kanji in a lesson, skip a whole level, or skip ahead below.</p></section>`;
   const bl=[3,5,8],tl=[60,80,100];
   const free=hwFreeRange(),opts=n=>Array.from({length:60},(_,i)=>`<option value="${i+1}"${i+1===n?' selected':''}>${i+1}</option>`).join('');
-  return`<div class="sectionhead"><h2>Writing</h2><span class="muted">${S.cfg.hwHideIntro?'<button class="linkbtn" data-act="hwShowIntro">How does this work?</button> · ':''}Write the kanji from WaniKani, level by level</span></div>${guestNote()}
-  ${hwTabs()}
+  return`<div class="sectionhead"><h2>Writing</h2><span class="muted">${S.cfg.hwHideIntro?'<button class="linkbtn" data-act="hwShowIntro">How does this work?</button> · ':''}Write the kanji from WaniKani, level by level · <button class="linkbtn" data-act="wlJump">Library below</button></span></div>${guestNote()}
   ${intro}
   <div class="bigs">
     <button class="big pink" data-act="hwLessons"${batch?'':' disabled'}><span><span class="bl">Lessons</span><br><span class="bt">${esc(lessonSub)}</span></span><span class="bn">${batch}</span></button>
@@ -2339,7 +2338,9 @@ function viewWriting(){
     <div class="optrow" style="margin-top:0"><span class="muted">From level</span><select class="field" id="hwFrom" aria-label="From level">${opts(free[0])}</select><span class="muted" style="width:auto">to</span><select class="field" id="hwTo" aria-label="To level">${opts(free[1])}</select></div>
     <div class="optrow"><span class="muted">How many</span><div class="seg" role="group" aria-label="Session size">${[[10,'10'],[20,'20'],[50,'50']].map(s=>`<button data-act="hwSize" data-n="${s[0]}" aria-pressed="${S.cfg.hwSize===s[0]}">${s[1]}</button>`).join('')}</div></div>
     <div class="tools" style="margin-top:12px"><button class="btn" data-act="hwFree"${hwFreeList().length?'':' disabled'}>Start free practice</button><span class="muted">${fmtN(hwFreeList().length)} kanji in levels ${free[0]} to ${free[1]}</span></div></section>
-  <section class="card"><header><h3>Trouble spots</h3></header>${hwStatsHtml()}</section>`;
+  <section class="card"><header><h3>Trouble spots</h3></header>${hwStatsHtml()}</section>
+  <div class="sectionhead" id="wlib" style="margin-top:26px"><h2>Library</h2><span class="muted">Every kanji by level: stage, next review and when you level up</span></div>
+  ${viewWritingLibrary()}`;
 }
 function hwLevelRows(levels){
   const firstLocked=levels.findIndex(l=>!l.open),lastShown=S.hwAllLv||firstLocked<0?HWLV-1:firstLocked;
@@ -2962,10 +2963,6 @@ function hwForecast(levels){
 const hwStageText=r=>r&&r.s>=1?stageName(r.s):'Not started';
 const shortIn=s=>{const m=Math.max(1,Math.round(s/60));return m<90?m+' min':m<36*60?Math.round(m/60)+' h':Math.round(m/1440)+' d'};
 const whenText=ts=>ts<=nowS()+60?'now':fmtWhen(ts)+' (in '+fmtIn(ts-nowS())+')';
-function hwTabs(){
-  const t=[['study','Learn and review','Lessons, reviews and free practice'],['library','Library','Every kanji by level: stage, next review and when you level up']];
-  return`<div class="bigtabs" role="group" aria-label="Writing section">${t.map(s=>`<button class="bigtab" data-act="wsub" data-v="${s[0]}" aria-pressed="${(S.wtab||'study')===s[0]}"><b>${s[1]}</b><span>${s[2]}</span></button>`).join('')}</div>`;
-}
 
 /* one kanji, from the Writing point of view */
 function openWriteKanji(ch){
@@ -3071,7 +3068,7 @@ document.addEventListener('click',e=>{
   const el=e.target.closest('[data-act]');if(!el)return;
   const d=el.dataset;
   switch(d.act){
-    case'wsub':S.wtab=d.v;render();break;
+    case'wlJump':{const el=document.getElementById('wlib');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});break}
     case'wkanji':openWriteKanji(d.ch);break;
     case'wlLv':setCfg('wlLv',d.v);break;
     case'wlSort':setCfg('wlSort',d.v);break;
